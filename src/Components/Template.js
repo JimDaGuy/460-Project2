@@ -7,7 +7,10 @@ import data from "../data/template.csv";
 class Template extends Component {
   componentDidMount() {
     d3.csv(data, d => {
-      return {};
+      return {
+        name: d.name,
+        wins: parseInt(d.wins)
+      };
     })
       .then(data => {
         this.visualizeData(data);
@@ -18,10 +21,11 @@ class Template extends Component {
   }
 
   visualizeData(dataset) {
-    const svgWidth = 650;
-    const svgHeight = 550;
+    const svgWidth = 500;
+    const svgHeight = 450;
 
-    // dataset.sort((a, b) => b.downloads - a.downloads);
+    dataset.sort((a, b) => a.wins - b.wins);
+    console.dir(dataset);
 
     let svg = d3
       .select(ReactDOM.findDOMNode(this.refs.d3Content))
@@ -30,51 +34,61 @@ class Template extends Component {
       .attr("height", `${svgHeight}px`);
 
     // Plotting data
-    /*
     let xScale = d3
-      .scaleLinear()
-      .domain([0, d3.max(dataset, d => d.downloads)])
-      .range([0, svgWidth - 100]);
+      .scaleBand()
+      .domain(dataset.map(d => d.name))
+      .rangeRound([40, svgWidth - 40])
+      .padding(0.15)
+      .align(0.1);
 
     let yScale = d3
-      .scaleBand()
-      .domain(dataset.map(d => d.app_name))
-      .rangeRound([20, svgHeight - 40]);
-
-    let colorScale = d3
       .scaleLinear()
-      .domain([4.5, 5])
-      .range(["#C588FF", "#7016C7"]);
+      .domain([0, d3.max(dataset, d => d.wins)])
+      .range([svgHeight - 40, 40]);
 
     svg
       .selectAll("rect")
-      .data(dataset)
+      .data(dataset, d => d.name)
       .enter()
       .append("rect")
-      .attr("x", 80)
-      .attr("y", d => yScale(d.app_name) + 2)
-      .attr("width", d => xScale(d.downloads))
-      .attr("height", 20)
-      .attr("fill", d => colorScale(d.average_rating));
+      .attr("x", d => xScale(d.name))
+      .attr("y", d => yScale(d.wins))
+      .attr("width", xScale.bandwidth())
+      .attr("height", d => svgHeight - 40 - yScale(d.wins))
+      .attr("fill", "orange")
+      .attr("stroke", "black");
 
     // Axes
     svg
       .append("g")
-      .attr("class", "xAxis")
-      .attr("transform", `translate(80, ${svgHeight - 20})`)
+      .attr("class", TemplateStyles.xAxis)
+      .attr("transform", `translate(0, ${svgHeight - 40})`)
       .call(d3.axisBottom(xScale));
 
     svg
       .append("g")
-      .attr("class", ChartStyles.yAxis)
-      .attr("transform", `translate(80,0 )`)
+      .attr("class", TemplateStyles.yAxis)
+      .attr("transform", `translate(40, 0 )`)
       .call(d3.axisLeft(yScale));
-      
-    */
   }
 
   render() {
-    return <div className={TemplateStyles.d3Content} ref="d3Content" />;
+    return (
+      <div className={TemplateStyles.container}>
+        <h1 className={TemplateStyles.chartType}>Template Chart</h1>
+        <hr />
+        <h2 className={TemplateStyles.chartH2}>Summary</h2>
+        <p className={TemplateStyles.p}>
+          Describes the type of chart and its characteristics. Describes what it
+          is useful for
+        </p>
+        <h3 className={TemplateStyles.chartH3}>Marks</h3>
+        <p className={TemplateStyles.p}>Describes the marks</p>
+        <h3 className={TemplateStyles.chartH3}>Channels</h3>
+        <p className={TemplateStyles.p}>Describes the channels</p>
+        <div className={TemplateStyles.d3Content} ref="d3Content" />
+      </div>
+    );
   }
 }
 

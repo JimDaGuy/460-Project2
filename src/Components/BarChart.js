@@ -21,8 +21,8 @@ class BarChart extends Component {
   }
 
   visualizeData(dataset) {
-    const svgWidth = 750;
-    const svgHeight = 650;
+    const svgWidth = 500;
+    const svgHeight = 450;
 
     dataset.sort((a, b) => a.wins - b.wins);
     console.dir(dataset);
@@ -73,7 +73,22 @@ class BarChart extends Component {
   }
 
   render() {
-    return <div className={BarChartStyles.d3Content} ref="d3Content" />;
+    return (
+      <div className={BarChartStyles.container}>
+        <h1 className={BarChartStyles.chartType}>Bar Chart</h1>
+        <hr />
+        <h2 className={BarChartStyles.chartH2}>Summary</h2>
+        <p className={BarChartStyles.p}>
+          Describes the type of chart and its characteristics. Describes what it
+          is useful for
+        </p>
+        <h3 className={BarChartStyles.chartH3}>Marks</h3>
+        <p className={BarChartStyles.p}>Describes the marks</p>
+        <h3 className={BarChartStyles.chartH3}>Channels</h3>
+        <p className={BarChartStyles.p}>Describes the channels</p>
+        <div className={BarChartStyles.d3Content} ref="d3Content" />
+      </div>
+    );
   }
 }
 
