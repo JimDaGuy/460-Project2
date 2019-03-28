@@ -1,0 +1,45 @@
+.container {
+  background-color: white;
+  margin: 0;
+  padding: 0;
+  min-width: 750px;
+}
+
+.header {
+  width: 100%;
+  height: 40px;
+  background-color: black;
+  color: white;
+  display: flex;
+  align-items: center;
+
+  span {
+    text-indent: 25px;
+    font-size: 1.1em;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    text-transform: uppercase;
+  }
+}
+
+.mainContent {
+  width: 100%;
+}
+
+.linksBox {
+  margin: 10px;
+  padding: 10px;
+  background-color: lightgray;
+  border: 1px solid black;
+  color: black;
+  overflow: auto;
+
+  button {
+    float: left;
+    clear: both;
+    color: blue;
+
+    &:hover {
+    }
+  }
+}
