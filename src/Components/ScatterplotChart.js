@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import BarChartStyles from "./BarChart.module.scss";
+import ScatterplotChartStyles from "./ScatterplotChart.module.scss";
 import * as d3 from "d3";
-import data from "../data/BarChart.csv";
+import data from "../data/ScatterplotChart.csv";
 
-class BarChart extends Component {
+class ScatterplotChart extends Component {
   componentDidMount() {
     d3.csv(data, d => {
       return {
@@ -61,52 +61,35 @@ class BarChart extends Component {
     // Axes
     svg
       .append("g")
-      .attr("class", "xAxis")
+      .attr("class", ScatterplotChartStyles.xAxis)
       .attr("transform", `translate(0, ${svgHeight - 40})`)
       .call(d3.axisBottom(xScale));
 
     svg
       .append("g")
-      .attr("class", BarChartStyles.yAxis)
+      .attr("class", ScatterplotChartStyles.yAxis)
       .attr("transform", `translate(40, 0 )`)
       .call(d3.axisLeft(yScale));
-
-    // Axis Labels
-    svg
-      .append("text")
-      .text("Person")
-      .attr("text-anchor", "middle")
-      .style("text-align", "center")
-      .style("alignment-baseline", "middle")
-      .attr("transform", `translate(${svgWidth / 2},${svgHeight - 10})`);
-
-    svg
-      .append("text")
-      .text("Wins")
-      .attr("text-anchor", "middle")
-      .style("text-align", "center")
-      .style("alignment-baseline", "middle")
-      .attr("transform", `translate(10 ,${svgHeight / 2}) rotate(270)`);
   }
 
   render() {
     return (
-      <div className={BarChartStyles.container}>
-        <h1 className={BarChartStyles.chartType}>Bar Chart</h1>
+      <div className={ScatterplotChartStyles.container}>
+        <h1 className={ScatterplotChartStyles.chartType}>Scatterplot Chart</h1>
         <hr />
-        <h2 className={BarChartStyles.chartH2}>Summary</h2>
-        <p className={BarChartStyles.p}>
+        <h2 className={ScatterplotChartStyles.chartH2}>Summary</h2>
+        <p className={ScatterplotChartStyles.p}>
           Describes the type of chart and its characteristics. Describes what it
           is useful for
         </p>
-        <h3 className={BarChartStyles.chartH3}>Marks</h3>
-        <p className={BarChartStyles.p}>Describes the marks</p>
-        <h3 className={BarChartStyles.chartH3}>Channels</h3>
-        <p className={BarChartStyles.p}>Describes the channels</p>
-        <div className={BarChartStyles.d3Content} ref="d3Content" />
+        <h3 className={ScatterplotChartStyles.chartH3}>Marks</h3>
+        <p className={ScatterplotChartStyles.p}>Describes the marks</p>
+        <h3 className={ScatterplotChartStyles.chartH3}>Channels</h3>
+        <p className={ScatterplotChartStyles.p}>Describes the channels</p>
+        <div className={ScatterplotChartStyles.d3Content} ref="d3Content" />
       </div>
     );
   }
 }
 
-export default BarChart;
+export default ScatterplotChart;

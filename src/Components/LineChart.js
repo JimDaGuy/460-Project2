@@ -110,6 +110,23 @@ class LineChart extends Component {
       .attr("class", LineChartStyles.yAxis)
       .attr("transform", `translate(60, 0 )`)
       .call(d3.axisLeft(yScale));
+
+    // Axis Labels
+    svg
+      .append("text")
+      .text("Date")
+      .attr("text-anchor", "middle")
+      .style("text-align", "center")
+      .style("alignment-baseline", "middle")
+      .attr("transform", `translate(${svgWidth / 2},${svgHeight - 10})`);
+
+    svg
+      .append("text")
+      .text("Worth")
+      .attr("text-anchor", "middle")
+      .style("text-align", "center")
+      .style("alignment-baseline", "middle")
+      .attr("transform", `translate(10 ,${svgHeight / 2}) rotate(270)`);
   }
 
   render() {

@@ -2,16 +2,15 @@ import React, { Component } from "react";
 import homeStyles from "./Home.module.scss";
 import BarChart from "../Components/BarChart";
 import LineChart from "../Components/LineChart";
-import Chart3 from "../Components/Chart3";
-import Chart4 from "../Components/Chart4";
-import Chart5 from "../Components/Chart5";
+import AreaChart from "../Components/AreaChart";
+import ScatterplotChart from "../Components/ScatterplotChart";
 
 class Home extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      chart: 2
+      chart: 4
     };
 
     this.setChart = this.setChart.bind(this);
@@ -71,6 +70,8 @@ class Home extends Component {
             <button onClick={() => this.setChart(0)}>Home</button>
             {chart === 1 ? <BarChart /> : null}
             {chart === 2 ? <LineChart /> : null}
+            {chart === 3 ? <AreaChart /> : null}
+            {chart === 4 ? <ScatterplotChart /> : null}
           </div>
         )}
       </div>
