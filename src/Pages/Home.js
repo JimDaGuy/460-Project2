@@ -5,13 +5,14 @@ import LineChart from "../Components/LineChart";
 import AreaChart from "../Components/AreaChart";
 import ScatterplotChart from "../Components/ScatterplotChart";
 import PieChart from "../Components/PieChart";
+import DonutChart from "../Components/DonutChart";
 
 class Home extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      chart: 5
+      chart: 6
     };
 
     this.setChart = this.setChart.bind(this);
@@ -74,6 +75,7 @@ class Home extends Component {
             {chart === 3 ? <AreaChart /> : null}
             {chart === 4 ? <ScatterplotChart /> : null}
             {chart === 5 ? <PieChart /> : null}
+            {chart === 6 ? <DonutChart /> : null}
           </div>
         )}
       </div>
