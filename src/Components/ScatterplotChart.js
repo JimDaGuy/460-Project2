@@ -8,8 +8,8 @@ class ScatterplotChart extends Component {
   componentDidMount() {
     d3.csv(data, d => {
       return {
-        name: d.name,
-        wins: parseInt(d.wins)
+        height: parseInt(d.height),
+        weight: parseInt(d.weight)
       };
     })
       .then(data => {
@@ -24,7 +24,6 @@ class ScatterplotChart extends Component {
     const svgWidth = 500;
     const svgHeight = 450;
 
-    dataset.sort((a, b) => a.wins - b.wins);
     console.dir(dataset);
 
     let svg = d3
@@ -35,28 +34,30 @@ class ScatterplotChart extends Component {
 
     // Plotting data
     let xScale = d3
-      .scaleBand()
-      .domain(dataset.map(d => d.name))
-      .rangeRound([40, svgWidth - 40])
-      .padding(0.15)
-      .align(0.1);
+      .scaleLinear()
+      .domain([
+        d3.min(dataset, d => d.weight) - 10,
+        d3.max(dataset, d => d.weight) + 10
+      ])
+      .range([40, svgWidth - 40]);
 
     let yScale = d3
       .scaleLinear()
-      .domain([0, d3.max(dataset, d => d.wins)])
+      .domain([
+        d3.min(dataset, d => d.height) - 4,
+        d3.max(dataset, d => d.height) + 4
+      ])
       .range([svgHeight - 40, 40]);
 
     svg
-      .selectAll("rect")
-      .data(dataset, d => d.name)
+      .selectAll("circle")
+      .data(dataset)
       .enter()
-      .append("rect")
-      .attr("x", d => xScale(d.name))
-      .attr("y", d => yScale(d.wins))
-      .attr("width", xScale.bandwidth())
-      .attr("height", d => svgHeight - 40 - yScale(d.wins))
-      .attr("fill", "orange")
-      .attr("stroke", "black");
+      .append("circle")
+      .attr("cx", d => xScale(d.weight))
+      .attr("cy", d => yScale(d.height))
+      .attr("r", 5)
+      .attr("fill", "orange");
 
     // Axes
     svg
@@ -69,7 +70,24 @@ class ScatterplotChart extends Component {
       .append("g")
       .attr("class", ScatterplotChartStyles.yAxis)
       .attr("transform", `translate(40, 0 )`)
-      .call(d3.axisLeft(yScale));
+      .call(d3.axisLeft(yScale).tickFormat(d => `${d}''`));
+
+    // Axis Labels
+    svg
+      .append("text")
+      .text("Weight (lbs)")
+      .attr("text-anchor", "middle")
+      .style("text-align", "center")
+      .style("alignment-baseline", "middle")
+      .attr("transform", `translate(${svgWidth / 2},${svgHeight - 10})`);
+
+    svg
+      .append("text")
+      .text("Height (in)")
+      .attr("text-anchor", "middle")
+      .style("text-align", "center")
+      .style("alignment-baseline", "middle")
+      .attr("transform", `translate(10 ,${svgHeight / 2}) rotate(270)`);
   }
 
   render() {
