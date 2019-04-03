@@ -22,10 +22,15 @@ class PieChart extends Component {
 
   visualizeData(dataset) {
     const svgWidth = 500;
-    const svgHeight = 500;
+    const svgHeight = 600;
+    const legendHeight = 100;
+    const pieIndent = 40;
+    const legendPaddingX = 30;
+    const legendPaddingY = 10;
+    const boxSize = 30;
+    const textToBoxPadding = 5;
 
     dataset.sort((a, b) => b.count - a.count);
-    console.dir(dataset);
 
     let svg = d3
       .select(ReactDOM.findDOMNode(this.refs.d3Content))
@@ -39,12 +44,12 @@ class PieChart extends Component {
     let arc = d3
       .arc()
       .innerRadius(0)
-      .outerRadius((svgWidth - 80) / 2);
+      .outerRadius((svgWidth - pieIndent * 2) / 2);
 
     // use a color scale for the bar colors
     // ordinal scales created given an array of output range values
     // usually used by giving input indices into array
-    let cScale = d3.scaleOrdinal(d3.schemeCategory10);
+    let cScale = d3.scaleOrdinal(d3.schemeSet1);
 
     let arcs = svg
       .selectAll("g.arc")
@@ -52,7 +57,10 @@ class PieChart extends Component {
       .enter()
       .append("g")
       .attr("class", "arc")
-      .attr("transform", `translate(${svgWidth / 2}, ${svgHeight / 2})`);
+      .attr(
+        "transform",
+        `translate(${svgWidth / 2}, ${(svgHeight - legendHeight) / 2})`
+      );
 
     // append an SVG path to each g element for the pie wedge
     // uses the arc generator we configured earlier
@@ -69,6 +77,62 @@ class PieChart extends Component {
       .attr("transform", d => `translate(${arc.centroid(d)})`)
       .attr("text-anchor", "middle")
       .text(d => d.value);
+
+    // Create Legend
+
+    // Boxes
+    svg
+      .selectAll(".bop")
+      .data(dataset)
+      .enter()
+      .append("rect")
+      .attr("x", (d, i) => {
+        // Get index matching three legend items per row
+        const indexWithRows = i % 3;
+        const paddedWidth = svgWidth - pieIndent * 2;
+        const x =
+          pieIndent + legendPaddingX + (indexWithRows * paddedWidth) / 3;
+        return x;
+      })
+      .attr("y", (d, i) => {
+        const initialHeight = svgHeight - legendHeight + legendPaddingY;
+        const row = Math.floor(i / 3);
+        const height = initialHeight + row * (30 + legendPaddingY);
+        return height;
+      })
+      .attr("width", boxSize)
+      .attr("height", boxSize)
+      .attr("fill", (d, i) => {
+        const colors = d3.schemeSet1;
+        return colors[i % dataset.length];
+      });
+
+    // Text
+    svg
+      .selectAll(".dop")
+      .data(dataset)
+      .enter()
+      .append("text")
+      .text((d, i) => d.pet)
+      .attr("transform", (d, i) => {
+        // Get index matching three legend items per row
+        const indexWithRows = i % 3;
+        const paddedWidth = svgWidth - pieIndent * 2;
+        const x =
+          pieIndent +
+          legendPaddingX +
+          boxSize +
+          textToBoxPadding +
+          (indexWithRows * paddedWidth) / 3;
+
+        const initialHeight = svgHeight - legendHeight + legendPaddingY;
+        const row = Math.floor(i / 3);
+        const y = initialHeight + 15 + row * (30 + legendPaddingY);
+
+        return `translate(${x},${y})`;
+      })
+      .style("alignment-baseline", "middle")
+      .style("text-align", "left");
   }
 
   render() {

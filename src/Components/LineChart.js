@@ -23,7 +23,8 @@ class LineChart extends Component {
 
   visualizeData(dataset) {
     const svgWidth = 500;
-    const svgHeight = 450;
+    const svgHeight = 550;
+    const legendHeight = 100;
 
     console.dir(dataset);
     const parseLines = dataset => {
@@ -54,6 +55,17 @@ class LineChart extends Component {
     const parsedLines = parseLines(dataset);
     console.dir(parsedLines);
 
+    let companies = {};
+    let companiesArray = [];
+    for (let i = 0; i < dataset.length; i++) {
+      const company = dataset[i].company;
+      if (!companies[company]) {
+        companies[company] = true;
+        companiesArray.push(company);
+      }
+    }
+    console.dir(companiesArray);
+
     let svg = d3
       .select(ReactDOM.findDOMNode(this.refs.d3Content))
       .append("svg")
@@ -69,7 +81,7 @@ class LineChart extends Component {
     let yScale = d3
       .scaleLinear()
       .domain([0, d3.max(dataset, d => d.worth)])
-      .range([svgHeight - 40, 40]);
+      .range([svgHeight - legendHeight - 40, 40]);
 
     let line = d3
       .line()
@@ -85,16 +97,8 @@ class LineChart extends Component {
       .append("path")
       .attr("d", d => line(d))
       .style("stroke", (d, i) => {
-        switch (i) {
-          case 0:
-            return "red";
-          case 1:
-            return "green";
-          case 2:
-            return "blue";
-          default:
-            return "black";
-        }
+        const colors = d3.schemeSet1;
+        return colors[i % companiesArray.length];
       })
       .style("fill", "none");
 
@@ -102,7 +106,7 @@ class LineChart extends Component {
     svg
       .append("g")
       .attr("class", LineChartStyles.xAxis)
-      .attr("transform", `translate(0, ${svgHeight - 40})`)
+      .attr("transform", `translate(0, ${svgHeight - legendHeight - 40})`)
       .call(d3.axisBottom(xScale).tickFormat(d3.timeFormat("%m/%y")));
 
     svg
@@ -118,7 +122,10 @@ class LineChart extends Component {
       .attr("text-anchor", "middle")
       .style("text-align", "center")
       .style("alignment-baseline", "middle")
-      .attr("transform", `translate(${svgWidth / 2},${svgHeight - 10})`);
+      .attr(
+        "transform",
+        `translate(${svgWidth / 2},${svgHeight - legendHeight - 10})`
+      );
 
     svg
       .append("text")
@@ -126,7 +133,65 @@ class LineChart extends Component {
       .attr("text-anchor", "middle")
       .style("text-align", "center")
       .style("alignment-baseline", "middle")
-      .attr("transform", `translate(10 ,${svgHeight / 2}) rotate(270)`);
+      .attr(
+        "transform",
+        `translate(10 ,${(svgHeight - legendHeight) / 2}) rotate(270)`
+      );
+
+    const legendPadding = 10;
+
+    // Create Legend
+    svg
+      .selectAll(".bop")
+      .data(companiesArray)
+      .enter()
+      .append("rect")
+      .attr("x", (d, i) => {
+        // Get index matching three legend items per row
+        const indexWithRows = i % 3;
+        const paddedWidth = svgWidth - legendPadding * 2;
+        return (
+          legendPadding +
+          60 +
+          (indexWithRows * paddedWidth) / companiesArray.length
+        );
+      })
+      .attr("y", (d, i) => {
+        const initialHeight = svgHeight - legendHeight + legendPadding;
+        const row = Math.floor(i / 3);
+        const height = initialHeight + row * (30 + legendPadding);
+        return height;
+      })
+      .attr("width", 30)
+      .attr("height", 30)
+      .attr("fill", (d, i) => {
+        const colors = d3.schemeSet1;
+        return colors[i % companiesArray.length];
+      });
+
+    svg
+      .selectAll(".dop")
+      .data(companiesArray)
+      .enter()
+      .append("text")
+      .text((d, i) => companiesArray[i])
+      .attr("transform", (d, i) => {
+        // Get index matching three legend items per row
+        const indexWithRows = i % 3;
+        const paddedWidth = svgWidth - legendPadding * 2;
+        const x =
+          legendPadding +
+          35 +
+          60 +
+          (indexWithRows * paddedWidth) / companiesArray.length;
+
+        const initialHeight = svgHeight - legendHeight + legendPadding;
+        const row = Math.floor(i / 3);
+        const y = initialHeight + 15 + row * (30 + legendPadding);
+
+        return `translate(${x},${y})`;
+      })
+      .style("alignment-baseline", "middle");
   }
 
   render() {

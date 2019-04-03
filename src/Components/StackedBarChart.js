@@ -24,7 +24,13 @@ class StackedBarChart extends Component {
 
   visualizeData(dataset) {
     const svgWidth = 500;
-    const svgHeight = 450;
+    const svgHeight = 600;
+    const chartIndent = 50;
+    const legendHeight = 100;
+    const legendPaddingX = 10;
+    const legendPaddingY = 10;
+    const boxSize = 30;
+    const textToBoxPadding = 5;
 
     console.dir(dataset);
 
@@ -38,18 +44,18 @@ class StackedBarChart extends Component {
 
     let stackedData = stack(dataset);
 
-    let yScale = d3
-      .scaleLinear()
-      .domain([0, d3.max(dataset, d => d.food + d.movie + d.videogame)])
-      .range([svgHeight - 40, 40]);
-
     let extent = d3.extent(dataset, d => d.date);
     let endDate = new Date(extent[1].getFullYear(), extent[1].getMonth() + 1);
 
     let xScale = d3
       .scaleTime()
       .domain([extent[0], endDate])
-      .range([40, svgWidth - 40]);
+      .range([chartIndent, svgWidth - chartIndent]);
+
+    let yScale = d3
+      .scaleLinear()
+      .domain([0, d3.max(dataset, d => d.food + d.movie + d.videogame)])
+      .range([svgHeight - chartIndent - legendHeight, chartIndent]);
 
     let cScale = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -60,14 +66,14 @@ class StackedBarChart extends Component {
       .append("g")
       .style("fill", (d, i) => cScale(i));
 
-    let barlen = (svgWidth - 80) / dataset.length - 4;
+    let barlen = (svgWidth - chartIndent * 2) / dataset.length - 4;
 
     groups
       .selectAll("rect")
       .data(d => d)
       .enter()
       .append("rect")
-      .attr("x", d => xScale(d.data.date))
+      .attr("x", d => xScale(d.data.date) + 4)
       .attr("y", d => yScale(d[1]))
       .attr("width", barlen)
       .attr("height", d => yScale(d[0]) - yScale(d[1]))
@@ -83,13 +89,16 @@ class StackedBarChart extends Component {
     svg
       .append("g")
       .attr("class", StackedBarChartStyles.xAxis)
-      .attr("transform", `translate(0, ${svgHeight - 40})`)
+      .attr(
+        "transform",
+        `translate(0, ${svgHeight - chartIndent - legendHeight})`
+      )
       .call(d3.axisBottom(xScale));
 
     svg
       .append("g")
       .attr("class", StackedBarChartStyles.yAxis)
-      .attr("transform", `translate(40, 0 )`)
+      .attr("transform", `translate(${chartIndent}, 0 )`)
       .call(d3.axisLeft(yScale).tickFormat(d => `$${d}`));
 
     // Axis Labels
@@ -99,7 +108,10 @@ class StackedBarChart extends Component {
       .attr("text-anchor", "middle")
       .style("text-align", "center")
       .style("alignment-baseline", "middle")
-      .attr("transform", `translate(${svgWidth / 2},${svgHeight - 10})`);
+      .attr(
+        "transform",
+        `translate(${svgWidth / 2},${svgHeight - legendHeight - 10})`
+      );
 
     svg
       .append("text")
@@ -107,7 +119,67 @@ class StackedBarChart extends Component {
       .attr("text-anchor", "middle")
       .style("text-align", "center")
       .style("alignment-baseline", "middle")
-      .attr("transform", `translate(10 ,${svgHeight / 2}) rotate(270)`);
+      .attr(
+        "transform",
+        `translate(10 ,${(svgHeight - legendHeight) / 2}) rotate(270)`
+      );
+
+    // Create Legend
+    const categories = ["Food", "Movies", "Videogames"];
+
+    // Boxes
+    svg
+      .selectAll(".bop")
+      .data(categories)
+      .enter()
+      .append("rect")
+      .attr("x", (d, i) => {
+        // Get index matching three legend items per row
+        const indexWithRows = i % 3;
+        const paddedWidth = svgWidth - chartIndent * 2;
+        const x =
+          chartIndent + legendPaddingX + (indexWithRows * paddedWidth) / 3;
+        return x;
+      })
+      .attr("y", (d, i) => {
+        const initialHeight = svgHeight - legendHeight + legendPaddingY;
+        const row = Math.floor(i / 3);
+        const height = initialHeight + row * (30 + legendPaddingY);
+        return height;
+      })
+      .attr("width", boxSize)
+      .attr("height", boxSize)
+      .attr("fill", (d, i) => {
+        const colors = d3.schemeCategory10;
+        return colors[i % dataset.length];
+      });
+
+    // Text
+    svg
+      .selectAll(".dop")
+      .data(categories)
+      .enter()
+      .append("text")
+      .text((d, i) => d)
+      .attr("transform", (d, i) => {
+        // Get index matching three legend items per row
+        const indexWithRows = i % 3;
+        const paddedWidth = svgWidth - chartIndent * 2;
+        const x =
+          chartIndent +
+          legendPaddingX +
+          boxSize +
+          textToBoxPadding +
+          (indexWithRows * paddedWidth) / 3;
+
+        const initialHeight = svgHeight - legendHeight + legendPaddingY;
+        const row = Math.floor(i / 3);
+        const y = initialHeight + 15 + row * (30 + legendPaddingY);
+
+        return `translate(${x},${y})`;
+      })
+      .style("alignment-baseline", "middle")
+      .style("text-align", "left");
   }
 
   render() {

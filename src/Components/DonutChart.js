@@ -22,10 +22,16 @@ class DonutChart extends Component {
 
   visualizeData(dataset) {
     const svgWidth = 500;
-    const svgHeight = 500;
+    const svgHeight = 600;
+    const legendHeight = 100;
+    const donutIndent = 40;
+    const donutWidth = 100;
+    const legendPaddingX = 30;
+    const legendPaddingY = 10;
+    const boxSize = 30;
+    const textToBoxPadding = 5;
 
     dataset.sort((a, b) => b.count - a.count);
-    console.dir(dataset);
 
     let svg = d3
       .select(ReactDOM.findDOMNode(this.refs.d3Content))
@@ -38,8 +44,8 @@ class DonutChart extends Component {
     // create D3 arc generator we will use for pie layout
     let arc = d3
       .arc()
-      .innerRadius((svgWidth - 80) / 2 - 100)
-      .outerRadius((svgWidth - 80) / 2);
+      .innerRadius((svgWidth - donutIndent * 2) / 2 - donutWidth)
+      .outerRadius((svgWidth - donutIndent * 2) / 2);
 
     // use a color scale for the bar colors
     // ordinal scales created given an array of output range values
@@ -52,7 +58,10 @@ class DonutChart extends Component {
       .enter()
       .append("g")
       .attr("class", "arc")
-      .attr("transform", `translate(${svgWidth / 2}, ${svgHeight / 2})`);
+      .attr(
+        "transform",
+        `translate(${svgWidth / 2}, ${(svgHeight - legendHeight) / 2})`
+      );
 
     // append an SVG path to each g element for the pie wedge
     // uses the arc generator we configured earlier
@@ -69,6 +78,62 @@ class DonutChart extends Component {
       .attr("transform", d => `translate(${arc.centroid(d)})`)
       .attr("text-anchor", "middle")
       .text(d => d.value);
+
+    // Create Legend
+
+    // Boxes
+    svg
+      .selectAll(".bop")
+      .data(dataset)
+      .enter()
+      .append("rect")
+      .attr("x", (d, i) => {
+        // Get index matching three legend items per row
+        const indexWithRows = i % 3;
+        const paddedWidth = svgWidth - donutIndent * 2;
+        const x =
+          donutIndent + legendPaddingX + (indexWithRows * paddedWidth) / 3;
+        return x;
+      })
+      .attr("y", (d, i) => {
+        const initialHeight = svgHeight - legendHeight + legendPaddingY;
+        const row = Math.floor(i / 3);
+        const height = initialHeight + row * (30 + legendPaddingY);
+        return height;
+      })
+      .attr("width", boxSize)
+      .attr("height", boxSize)
+      .attr("fill", (d, i) => {
+        const colors = d3.schemeDark2;
+        return colors[i % dataset.length];
+      });
+
+    // Text
+    svg
+      .selectAll(".dop")
+      .data(dataset)
+      .enter()
+      .append("text")
+      .text((d, i) => d.donut)
+      .attr("transform", (d, i) => {
+        // Get index matching three legend items per row
+        const indexWithRows = i % 3;
+        const paddedWidth = svgWidth - donutIndent * 2;
+        const x =
+          donutIndent +
+          legendPaddingX +
+          boxSize +
+          textToBoxPadding +
+          (indexWithRows * paddedWidth) / 3;
+
+        const initialHeight = svgHeight - legendHeight + legendPaddingY;
+        const row = Math.floor(i / 3);
+        const y = initialHeight + 15 + row * (30 + legendPaddingY);
+
+        return `translate(${x},${y})`;
+      })
+      .style("alignment-baseline", "middle")
+      .style("text-align", "left");
   }
 
   render() {
