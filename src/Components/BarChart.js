@@ -22,7 +22,7 @@ class BarChart extends Component {
 
   visualizeData(dataset) {
     const svgWidth = 500;
-    const svgHeight = 450;
+    const svgHeight = 500;
 
     dataset.sort((a, b) => a.wins - b.wins);
     console.dir(dataset);

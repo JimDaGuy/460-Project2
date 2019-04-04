@@ -22,7 +22,8 @@ class ScatterplotChart extends Component {
 
   visualizeData(dataset) {
     const svgWidth = 500;
-    const svgHeight = 450;
+    const svgHeight = 500;
+    const chartIndent = 50;
 
     console.dir(dataset);
 
@@ -39,7 +40,7 @@ class ScatterplotChart extends Component {
         d3.min(dataset, d => d.weight) - 10,
         d3.max(dataset, d => d.weight) + 10
       ])
-      .range([40, svgWidth - 40]);
+      .range([chartIndent, svgWidth - chartIndent]);
 
     let yScale = d3
       .scaleLinear()
@@ -47,7 +48,7 @@ class ScatterplotChart extends Component {
         d3.min(dataset, d => d.height) - 4,
         d3.max(dataset, d => d.height) + 4
       ])
-      .range([svgHeight - 40, 40]);
+      .range([svgHeight - chartIndent, chartIndent]);
 
     svg
       .selectAll("circle")
@@ -63,13 +64,13 @@ class ScatterplotChart extends Component {
     svg
       .append("g")
       .attr("class", ScatterplotChartStyles.xAxis)
-      .attr("transform", `translate(0, ${svgHeight - 40})`)
+      .attr("transform", `translate(0, ${svgHeight - chartIndent})`)
       .call(d3.axisBottom(xScale));
 
     svg
       .append("g")
       .attr("class", ScatterplotChartStyles.yAxis)
-      .attr("transform", `translate(40, 0 )`)
+      .attr("transform", `translate(${chartIndent}, 0 )`)
       .call(d3.axisLeft(yScale).tickFormat(d => `${d}''`));
 
     // Axis Labels
@@ -79,7 +80,7 @@ class ScatterplotChart extends Component {
       .attr("text-anchor", "middle")
       .style("text-align", "center")
       .style("alignment-baseline", "middle")
-      .attr("transform", `translate(${svgWidth / 2},${svgHeight - 10})`);
+      .attr("transform", `translate(${svgWidth / 2},${svgHeight - 15})`);
 
     svg
       .append("text")
@@ -87,7 +88,7 @@ class ScatterplotChart extends Component {
       .attr("text-anchor", "middle")
       .style("text-align", "center")
       .style("alignment-baseline", "middle")
-      .attr("transform", `translate(10 ,${svgHeight / 2}) rotate(270)`);
+      .attr("transform", `translate(15,${svgHeight / 2}) rotate(270)`);
   }
 
   render() {

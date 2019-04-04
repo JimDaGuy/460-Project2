@@ -22,7 +22,8 @@ class Template extends Component {
 
   visualizeData(dataset) {
     const svgWidth = 500;
-    const svgHeight = 450;
+    const svgHeight = 500;
+    const chartIndent = 50;
 
     dataset.sort((a, b) => a.wins - b.wins);
     console.dir(dataset);
@@ -37,14 +38,14 @@ class Template extends Component {
     let xScale = d3
       .scaleBand()
       .domain(dataset.map(d => d.name))
-      .rangeRound([40, svgWidth - 40])
+      .rangeRound([chartIndent, svgWidth - chartIndent])
       .padding(0.15)
       .align(0.1);
 
     let yScale = d3
       .scaleLinear()
       .domain([0, d3.max(dataset, d => d.wins)])
-      .range([svgHeight - 40, 40]);
+      .range([svgHeight - chartIndent, chartIndent]);
 
     svg
       .selectAll("rect")
@@ -54,7 +55,7 @@ class Template extends Component {
       .attr("x", d => xScale(d.name))
       .attr("y", d => yScale(d.wins))
       .attr("width", xScale.bandwidth())
-      .attr("height", d => svgHeight - 40 - yScale(d.wins))
+      .attr("height", d => svgHeight - chartIndent - yScale(d.wins))
       .attr("fill", "orange")
       .attr("stroke", "black");
 
@@ -62,13 +63,13 @@ class Template extends Component {
     svg
       .append("g")
       .attr("class", TemplateStyles.xAxis)
-      .attr("transform", `translate(0, ${svgHeight - 40})`)
+      .attr("transform", `translate(0, ${svgHeight - chartIndent})`)
       .call(d3.axisBottom(xScale));
 
     svg
       .append("g")
       .attr("class", TemplateStyles.yAxis)
-      .attr("transform", `translate(40, 0 )`)
+      .attr("transform", `translate(${chartIndent}, 0 )`)
       .call(d3.axisLeft(yScale));
   }
 

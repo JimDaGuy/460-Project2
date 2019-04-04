@@ -22,7 +22,8 @@ class AreaChart extends Component {
 
   visualizeData(dataset) {
     const svgWidth = 500;
-    const svgHeight = 450;
+    const svgHeight = 500;
+    const chartIndent = 50;
 
     dataset.sort((a, b) => a.date - b.date);
     console.dir(dataset);
@@ -37,17 +38,17 @@ class AreaChart extends Component {
     let xScale = d3
       .scaleTime()
       .domain(d3.extent(dataset, d => d.date))
-      .rangeRound([40, svgWidth - 40]);
+      .rangeRound([chartIndent, svgWidth - chartIndent]);
 
     let yScale = d3
       .scaleLinear()
       .domain([0, d3.max(dataset, d => d.growth)])
-      .range([svgHeight - 40, 40]);
+      .range([svgHeight - chartIndent, chartIndent]);
 
     let area = d3
       .area()
       .x(d => xScale(d.date))
-      .y0(svgHeight - 40)
+      .y0(svgHeight - chartIndent)
       .y1(d => yScale(d.growth));
 
     svg
@@ -61,13 +62,13 @@ class AreaChart extends Component {
     svg
       .append("g")
       .attr("class", AreaChartStyles.xAxis)
-      .attr("transform", `translate(0, ${svgHeight - 40})`)
+      .attr("transform", `translate(0, ${svgHeight - chartIndent})`)
       .call(d3.axisBottom(xScale));
 
     svg
       .append("g")
       .attr("class", AreaChartStyles.yAxis)
-      .attr("transform", `translate(40, 0 )`)
+      .attr("transform", `translate(${chartIndent}, 0 )`)
       .call(d3.axisLeft(yScale).tickFormat(d => `${d}%`));
 
     // Axis Labels
@@ -77,7 +78,7 @@ class AreaChart extends Component {
       .attr("text-anchor", "middle")
       .style("text-align", "center")
       .style("alignment-baseline", "middle")
-      .attr("transform", `translate(${svgWidth / 2},${svgHeight - 10})`);
+      .attr("transform", `translate(${svgWidth / 2},${svgHeight - 15})`);
 
     svg
       .append("text")
@@ -86,15 +87,6 @@ class AreaChart extends Component {
       .style("text-align", "center")
       .style("alignment-baseline", "middle")
       .attr("transform", `translate(10 ,${svgHeight / 2}) rotate(270)`);
-
-    /*
-    svg
-      .append("rect")
-      .attr("x", 0)
-      .attr("y", svgHeight - 20)
-      .attr("width", svgWidth / 2)
-      .attr("height", 20);
-      */
   }
 
   render() {

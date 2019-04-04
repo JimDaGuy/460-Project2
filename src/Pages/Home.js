@@ -7,13 +7,14 @@ import ScatterplotChart from "../Components/ScatterplotChart";
 import PieChart from "../Components/PieChart";
 import DonutChart from "../Components/DonutChart";
 import StackedBarChart from "../Components/StackedBarChart";
+import StackedAreaChart from "../Components/StackedAreaChart";
 
 class Home extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      chart: 7
+      chart: 8
     };
 
     this.setChart = this.setChart.bind(this);
@@ -62,7 +63,7 @@ class Home extends Component {
               <button onClick={() => this.setChart(14)}>14. Tree</button>
               <button onClick={() => this.setChart(15)}>15. Treemap</button>
               <button onClick={() => this.setChart(16)}>
-                16. Maps (points, connections)
+                16. Map with points
               </button>
               <button onClick={() => this.setChart(17)}>17. Choropleth</button>
               <button onClick={() => this.setChart(18)}>18. Candlestick</button>
@@ -78,6 +79,7 @@ class Home extends Component {
             {chart === 5 ? <PieChart /> : null}
             {chart === 6 ? <DonutChart /> : null}
             {chart === 7 ? <StackedBarChart /> : null}
+            {chart === 8 ? <StackedAreaChart /> : null}
           </div>
         )}
       </div>
