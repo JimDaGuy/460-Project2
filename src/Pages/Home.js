@@ -9,13 +9,14 @@ import DonutChart from "../Components/DonutChart";
 import StackedBarChart from "../Components/StackedBarChart";
 import StackedAreaChart from "../Components/StackedAreaChart";
 import ForceDirectedChart from "../Components/ForceDirectedChart";
+import ChordChart from "../Components/ChordChart";
 
 class Home extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      chart: 9
+      chart: 10
     };
 
     this.setChart = this.setChart.bind(this);
@@ -82,6 +83,7 @@ class Home extends Component {
             {chart === 7 ? <StackedBarChart /> : null}
             {chart === 8 ? <StackedAreaChart /> : null}
             {chart === 9 ? <ForceDirectedChart /> : null}
+            {chart === 10 ? <ChordChart /> : null}
           </div>
         )}
       </div>
