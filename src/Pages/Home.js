@@ -10,6 +10,14 @@ import StackedBarChart from "../Components/StackedBarChart";
 import StackedAreaChart from "../Components/StackedAreaChart";
 import ForceDirectedChart from "../Components/ForceDirectedChart";
 import ChordChart from "../Components/ChordChart";
+import ClusterChart from "../Components/ClusterChart";
+import PackedCirclesChart from "../Components/PackedCirclesChart";
+import PartitionChart from "../Components/PartitionChart";
+import TreeChart from "../Components/TreeChart";
+import MapChart from "../Components/MapChart";
+import TreemapChart from "../Components/TreemapChart";
+import ChoroplethChart from "../Components/ChoroplethChart";
+import CandlestickChart from "../Components/CandlestickChart";
 
 class Home extends Component {
   constructor(props) {
@@ -84,6 +92,14 @@ class Home extends Component {
             {chart === 8 ? <StackedAreaChart /> : null}
             {chart === 9 ? <ForceDirectedChart /> : null}
             {chart === 10 ? <ChordChart /> : null}
+            {chart === 11 ? <ClusterChart /> : null}
+            {chart === 12 ? <PackedCirclesChart /> : null}
+            {chart === 13 ? <PartitionChart /> : null}
+            {chart === 14 ? <TreeChart /> : null}
+            {chart === 15 ? <TreemapChart /> : null}
+            {chart === 16 ? <MapChart /> : null}
+            {chart === 17 ? <ChoroplethChart /> : null}
+            {chart === 18 ? <CandlestickChart /> : null}
           </div>
         )}
       </div>

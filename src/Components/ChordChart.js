@@ -2,22 +2,10 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import ChordChartStyles from "./ChordChart.module.scss";
 import * as d3 from "d3";
-import data from "../data/ChordChart.csv";
 
 class ChordChart extends Component {
   componentDidMount() {
-    d3.csv(data, d => {
-      return {
-        name: d.name,
-        wins: parseInt(d.wins)
-      };
-    })
-      .then(data => {
-        this.visualizeData();
-      })
-      .catch(error => {
-        console.dir(error);
-      });
+    this.visualizeData();
   }
 
   visualizeData() {
