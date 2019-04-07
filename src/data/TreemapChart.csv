@@ -1,0 +1,14 @@
+id,parentId,size
+departments
+accounting,departments
+hr,departments
+sales,departments
+customer service,departments
+payroll,accounting,35
+investments,accounting,26
+risk mgmt,accounting,18
+hiring,hr,15
+firing,hr,26
+acquistion,sales,60
+retention,sales,76
+outreach,customer service,16

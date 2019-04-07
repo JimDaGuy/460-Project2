@@ -2,31 +2,123 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import PackedCirclesChartStyles from "./PackedCirclesChart.module.scss";
 import * as d3 from "d3";
-import data from "../data/PackedCirclesChart.csv";
 
 class PackedCirclesChart extends Component {
   componentDidMount() {
-    d3.csv(data, d => {
-      return {
-        name: d.name,
-        wins: parseInt(d.wins)
-      };
-    })
-      .then(data => {
-        this.visualizeData(data);
-      })
-      .catch(error => {
-        console.dir(error);
-      });
+    this.visualizeData();
   }
 
-  visualizeData(dataset) {
+  visualizeData() {
     const svgWidth = 500;
     const svgHeight = 500;
     const chartIndent = 50;
 
-    dataset.sort((a, b) => a.wins - b.wins);
-    console.dir(dataset);
+    let packedData = {
+      name: "parent",
+      children: [
+        {
+          name: "parent",
+          children: [
+            {
+              name: "child",
+              value: 27
+            },
+            {
+              name: "child",
+              value: 105
+            },
+            {
+              name: "child",
+              value: 63
+            },
+            {
+              name: "child",
+              value: 233
+            }
+          ]
+        },
+        {
+          name: "parent",
+          children: [
+            {
+              name: "child",
+              value: 267
+            },
+            {
+              name: "child",
+              value: 290
+            },
+            {
+              name: "child",
+              value: 43
+            },
+            {
+              name: "child",
+              value: 83
+            }
+          ]
+        },
+        {
+          name: "parent",
+          children: [
+            {
+              name: "child",
+              value: 277
+            },
+            {
+              name: "child",
+              value: 312
+            },
+            {
+              name: "child",
+              value: 56
+            },
+            {
+              name: "child",
+              value: 300
+            },
+            {
+              name: "child",
+              value: 109
+            },
+            {
+              name: "child",
+              value: 135
+            }
+          ]
+        },
+        {
+          name: "parent",
+          children: [
+            {
+              name: "child",
+              value: 65
+            },
+            {
+              name: "child",
+              value: 45
+            },
+            {
+              name: "child",
+              value: 69
+            }
+          ]
+        },
+        {
+          name: "parent",
+          children: [
+            {
+              name: "child",
+              value: 217
+            },
+            {
+              name: "child",
+              value: 240
+            }
+          ]
+        }
+      ]
+    };
 
     let svg = d3
       .select(ReactDOM.findDOMNode(this.refs.d3Content))
@@ -34,43 +126,40 @@ class PackedCirclesChart extends Component {
       .attr("width", `${svgWidth}px`)
       .attr("height", `${svgHeight}px`);
 
-    // Plotting data
-    let xScale = d3
-      .scaleBand()
-      .domain(dataset.map(d => d.name))
-      .rangeRound([chartIndent, svgWidth - chartIndent])
-      .padding(0.15)
-      .align(0.1);
+    let root = d3.hierarchy(packedData).sum(d => d.value || 0);
 
-    let yScale = d3
-      .scaleLinear()
-      .domain([0, d3.max(dataset, d => d.wins)])
-      .range([svgHeight - chartIndent, chartIndent]);
+    let partition = d3
+      .pack()
+      .size([svgWidth - chartIndent * 2, svgHeight - chartIndent * 2])
+      .padding(1);
+
+    partition(root);
+
+    let cScale = d3.scaleOrdinal(d3.schemePaired);
 
     svg
-      .selectAll("rect")
-      .data(dataset, d => d.name)
+      .selectAll("circle")
+      .data(root.descendants())
       .enter()
-      .append("rect")
-      .attr("x", d => xScale(d.name))
-      .attr("y", d => yScale(d.wins))
-      .attr("width", xScale.bandwidth())
-      .attr("height", d => svgHeight - chartIndent - yScale(d.wins))
-      .attr("fill", "orange")
-      .attr("stroke", "black");
-
-    // Axes
-    svg
-      .append("g")
-      .attr("class", PackedCirclesChartStyles.xAxis)
-      .attr("transform", `translate(0, ${svgHeight - chartIndent})`)
-      .call(d3.axisBottom(xScale));
+      .append("circle")
+      .style("fill", d => cScale(d.depth))
+      .attr("cx", d => d.x)
+      .attr("cy", d => d.y)
+      .attr("r", d => d.r)
+      .attr("transform", `translate(${chartIndent}, ${chartIndent})`);
 
     svg
-      .append("g")
-      .attr("class", PackedCirclesChartStyles.yAxis)
-      .attr("transform", `translate(${chartIndent}, 0 )`)
-      .call(d3.axisLeft(yScale));
+      .selectAll("text")
+      .data(root.descendants())
+      .enter()
+      .filter(d => d.depth === 2)
+      .append("text")
+      .style("font-size", ".7em")
+      .style("text-anchor", "middle")
+      .attr("x", d => d.x)
+      .attr("y", d => d.y + 4)
+      .attr("transform", `translate(${chartIndent}, ${chartIndent})`)
+      .text(d => d.data.name);
   }
 
   render() {

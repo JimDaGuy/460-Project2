@@ -4,29 +4,29 @@ import TreemapChartStyles from "./TreemapChart.module.scss";
 import * as d3 from "d3";
 import data from "../data/TreemapChart.csv";
 
+// Source https://bl.ocks.org/denjn5/bb835c4fb8923ee65a13008832d2efed
+
 class TreemapChart extends Component {
   componentDidMount() {
     d3.csv(data, d => {
       return {
-        name: d.name,
-        wins: parseInt(d.wins)
+        id: d.id,
+        parentId: d.parentId,
+        size: parseInt(d.size)
       };
     })
       .then(data => {
-        this.visualizeData(data);
+        const treemapData = d3.stratify()(data);
+        this.visualizeData(treemapData);
       })
       .catch(error => {
         console.dir(error);
       });
   }
 
-  visualizeData(dataset) {
-    const svgWidth = 500;
-    const svgHeight = 500;
-    const chartIndent = 50;
-
-    dataset.sort((a, b) => a.wins - b.wins);
-    console.dir(dataset);
+  visualizeData(data) {
+    const svgWidth = 600;
+    const svgHeight = 600;
 
     let svg = d3
       .select(ReactDOM.findDOMNode(this.refs.d3Content))
@@ -34,43 +34,50 @@ class TreemapChart extends Component {
       .attr("width", `${svgWidth}px`)
       .attr("height", `${svgHeight}px`);
 
-    // Plotting data
-    let xScale = d3
-      .scaleBand()
-      .domain(dataset.map(d => d.name))
-      .rangeRound([chartIndent, svgWidth - chartIndent])
-      .padding(0.15)
-      .align(0.1);
+    let treemap = d3
+      .treemap()
+      .size([svgWidth, svgHeight])
+      .padding(15);
 
-    let yScale = d3
-      .scaleLinear()
-      .domain([0, d3.max(dataset, d => d.wins)])
-      .range([svgHeight - chartIndent, chartIndent]);
+    let root = d3.hierarchy(data).sum(d => d.data.size);
 
+    let nodes = root.descendants();
+
+    treemap(root);
+
+    const cScale = d3.scaleOrdinal(d3.schemePastel2);
+
+    // Append slices
     svg
       .selectAll("rect")
-      .data(dataset, d => d.name)
+      .data(nodes)
       .enter()
       .append("rect")
-      .attr("x", d => xScale(d.name))
-      .attr("y", d => yScale(d.wins))
-      .attr("width", xScale.bandwidth())
-      .attr("height", d => svgHeight - chartIndent - yScale(d.wins))
-      .attr("fill", "orange")
-      .attr("stroke", "black");
+      .attr("fill", d => cScale(d.depth))
+      .attr("x", function(d) {
+        return d.x0;
+      })
+      .attr("y", function(d) {
+        return d.y0;
+      })
+      .attr("width", function(d) {
+        return d.x1 - d.x0;
+      })
+      .attr("height", function(d) {
+        return d.y1 - d.y0;
+      });
 
-    // Axes
+    // Append text for slices
     svg
-      .append("g")
-      .attr("class", TreemapChartStyles.xAxis)
-      .attr("transform", `translate(0, ${svgHeight - chartIndent})`)
-      .call(d3.axisBottom(xScale));
-
-    svg
-      .append("g")
-      .attr("class", TreemapChartStyles.yAxis)
-      .attr("transform", `translate(${chartIndent}, 0 )`)
-      .call(d3.axisLeft(yScale));
+      .selectAll("text")
+      .data(nodes)
+      .enter()
+      .append("text")
+      .style("font-size", "8pt")
+      .style("font-weight", d => (d.children ? "bold" : "normal"))
+      .attr("x", d => d.x0 + 3)
+      .attr("y", d => d.y0 + 12)
+      .text(d => d.data.id);
   }
 
   render() {

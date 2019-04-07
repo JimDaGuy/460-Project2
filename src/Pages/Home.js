@@ -24,7 +24,7 @@ class Home extends Component {
     super(props);
 
     this.state = {
-      chart: 10
+      chart: 11
     };
 
     this.setChart = this.setChart.bind(this);
@@ -97,6 +97,7 @@ class Home extends Component {
             {chart === 13 ? <PartitionChart /> : null}
             {chart === 14 ? <TreeChart /> : null}
             {chart === 15 ? <TreemapChart /> : null}
+
             {chart === 16 ? <MapChart /> : null}
             {chart === 17 ? <ChoroplethChart /> : null}
             {chart === 18 ? <CandlestickChart /> : null}

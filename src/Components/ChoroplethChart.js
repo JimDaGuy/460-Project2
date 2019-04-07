@@ -8,8 +8,9 @@ class ChoroplethChart extends Component {
   componentDidMount() {
     d3.csv(data, d => {
       return {
-        name: d.name,
-        wins: parseInt(d.wins)
+        id: d.id,
+        parentId: d.parentId,
+        size: parseInt(d.size)
       };
     })
       .then(data => {
