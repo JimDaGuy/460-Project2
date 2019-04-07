@@ -4,30 +4,37 @@ import ChoroplethChartStyles from "./ChoroplethChart.module.scss";
 import * as d3 from "d3";
 import data from "../data/ChoroplethChart.csv";
 
+// Source: http://bl.ocks.org/michellechandra/0b2ce4923dc9b5809922
+
 class ChoroplethChart extends Component {
   componentDidMount() {
     d3.csv(data, d => {
       return {
-        id: d.id,
-        parentId: d.parentId,
-        size: parseInt(d.size)
+        state: d.state,
+        value: parseInt(d.value)
       };
     })
-      .then(data => {
-        this.visualizeData(data);
+      .then(stateData => {
+        console.dir(stateData);
+        d3.json("us-states.json")
+          .then(geojson => {
+            console.dir(geojson);
+            this.visualizeData(geojson, stateData);
+          })
+          .catch(error => {
+            console.dir(error);
+          });
       })
       .catch(error => {
         console.dir(error);
       });
   }
 
-  visualizeData(dataset) {
+  visualizeData(geojson, stateData) {
     const svgWidth = 500;
     const svgHeight = 500;
-    const chartIndent = 50;
-
-    dataset.sort((a, b) => a.wins - b.wins);
-    console.dir(dataset);
+    const legendWidth = 350;
+    const legendHeight = 30;
 
     let svg = d3
       .select(ReactDOM.findDOMNode(this.refs.d3Content))
@@ -35,43 +42,130 @@ class ChoroplethChart extends Component {
       .attr("width", `${svgWidth}px`)
       .attr("height", `${svgHeight}px`);
 
-    // Plotting data
-    let xScale = d3
-      .scaleBand()
-      .domain(dataset.map(d => d.name))
-      .rangeRound([chartIndent, svgWidth - chartIndent])
-      .padding(0.15)
-      .align(0.1);
+    let projection = d3
+      .geoAlbersUsa()
+      .translate([svgWidth / 2, svgHeight / 2])
+      .scale([650]);
 
-    let yScale = d3
+    let path = d3.geoPath().projection(projection);
+
+    let maxValue = d3.max(stateData, d => d.value);
+
+    let cScale = d3
       .scaleLinear()
-      .domain([0, d3.max(dataset, d => d.wins)])
-      .range([svgHeight - chartIndent, chartIndent]);
+      .domain([
+        0,
+        maxValue * 0.2,
+        maxValue * 0.4,
+        maxValue * 0.6,
+        maxValue * 0.8,
+        maxValue
+      ])
+      .range([
+        "#4d9221",
+        "#a1d76a",
+        "#e6f5d0",
+        "#fde0ef",
+        "#e9a3c9",
+        "#c51b7d"
+      ]);
 
     svg
-      .selectAll("rect")
-      .data(dataset, d => d.name)
+      .selectAll("path")
+      .data(geojson.features)
       .enter()
-      .append("rect")
-      .attr("x", d => xScale(d.name))
-      .attr("y", d => yScale(d.wins))
-      .attr("width", xScale.bandwidth())
-      .attr("height", d => svgHeight - chartIndent - yScale(d.wins))
-      .attr("fill", "orange")
+      .append("path")
+      .attr("d", path)
+      .attr("fill", d => {
+        for (let i = 0; i < stateData.length; i++) {
+          if (d.properties.NAME === stateData[i].state)
+            return cScale(stateData[i].value);
+        }
+        return "lightgray";
+      })
       .attr("stroke", "black");
 
-    // Axes
-    svg
-      .append("g")
-      .attr("class", ChoroplethChartStyles.xAxis)
-      .attr("transform", `translate(0, ${svgHeight - chartIndent})`)
-      .call(d3.axisBottom(xScale));
+    // Create legend
+    let legend = svg
+      .append("defs")
+      .append("svg:linearGradient")
+      .attr("id", "gradient")
+      .attr("x1", "0%")
+      .attr("y1", "100%")
+      .attr("x2", "100%")
+      .attr("y2", "100%")
+      .attr("spreadMethod", "pad");
 
+    legend
+      .append("stop")
+      .attr("offset", "0%")
+      .attr("stop-color", "#4d9221")
+      .attr("stop-opacity", 1);
+
+    legend
+      .append("stop")
+      .attr("offset", "20%")
+      .attr("stop-color", "#a1d76a")
+      .attr("stop-opacity", 1);
+
+    legend
+      .append("stop")
+      .attr("offset", "40%")
+      .attr("stop-color", "#e6f5d0")
+      .attr("stop-opacity", 1);
+
+    legend
+      .append("stop")
+      .attr("offset", "60%")
+      .attr("stop-color", "#fde0ef")
+      .attr("stop-opacity", 1);
+
+    legend
+      .append("stop")
+      .attr("offset", "80%")
+      .attr("stop-color", "#e9a3c9")
+      .attr("stop-opacity", 1);
+
+    legend
+      .append("stop")
+      .attr("offset", "100%")
+      .attr("stop-color", "#c51b7d")
+      .attr("stop-opacity", 1);
+
+    // Legend Rectangle
     svg
-      .append("g")
-      .attr("class", ChoroplethChartStyles.yAxis)
-      .attr("transform", `translate(${chartIndent}, 0 )`)
-      .call(d3.axisLeft(yScale));
+      .append("rect")
+      .attr("width", legendWidth)
+      .attr("height", legendHeight)
+      .style("fill", "url(#gradient)")
+      .style("stroke", "black")
+      .attr(
+        "transform",
+        `translate( ${svgWidth / 2 - legendWidth / 2}, ${svgHeight -
+          legendHeight -
+          10})`
+      );
+
+    // Append lower bound text
+    svg
+      .append("text")
+      .attr("x", svgWidth / 2 - legendWidth / 2 + 5)
+      .attr("y", svgHeight - legendHeight - 5)
+      .attr("dominant-baseline", "hanging")
+      .attr("fill", "black")
+      .style("font-weight", "bold")
+      .text("Value: 0");
+
+    // Append upper bound text
+    svg
+      .append("text")
+      .attr("x", svgWidth / 2 + legendWidth / 2 - 5)
+      .attr("y", svgHeight - legendHeight - 5)
+      .attr("dominant-baseline", "hanging")
+      .attr("text-anchor", "end")
+      .attr("fill", "black")
+      .style("font-weight", "bold")
+      .text(`Value: ${maxValue}`);
   }
 
   render() {

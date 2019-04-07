@@ -3,7 +3,8 @@ import ReactDOM from "react-dom";
 import MapChartStyles from "./MapChart.module.scss";
 import * as d3 from "d3";
 
-// Source: http://bl.ocks.org/phil-pedruco/7745589
+// Source 1: https://github.com/veltman/d3-stateplane
+// Source 2: http://bl.ocks.org/phil-pedruco/7745589
 
 class MapChart extends Component {
   componentDidMount() {
@@ -30,6 +31,10 @@ class MapChart extends Component {
       {
         name: "Buffalo",
         coords: [-78.8784, 42.8864]
+      },
+      {
+        name: "Albany",
+        coords: [-73.7562, 42.6526]
       }
     ];
 
@@ -40,7 +45,7 @@ class MapChart extends Component {
       .attr("height", `${svgHeight}px`);
 
     let projection = d3
-      .geoMercator()
+      .geoTransverseMercator()
       .rotate([76 + 35 / 60, -40])
       .scale([4700])
       .translate([200, 500]);
@@ -64,17 +69,7 @@ class MapChart extends Component {
       .attr("cx", d => projection(d.coords)[0])
       .attr("cy", d => projection(d.coords)[1])
       .attr("r", "5px")
-      .attr("fill", "red")
-      .on("mouseover", function(d, i) {
-        d3.select(this)
-          .attr("stroke", "black")
-          .attr("fill", "lightblue");
-      })
-      .on("mouseout", function(d, i) {
-        d3.select(this)
-          .attr("stroke", "none")
-          .attr("fill", "red");
-      });
+      .attr("fill", "red");
 
     svg
       .selectAll("text")
