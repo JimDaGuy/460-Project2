@@ -2,31 +2,36 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import MapChartStyles from "./MapChart.module.scss";
 import * as d3 from "d3";
-import data from "../data/MapChart.csv";
+
+// Source: http://bl.ocks.org/phil-pedruco/7745589
 
 class MapChart extends Component {
   componentDidMount() {
-    d3.csv(data, d => {
-      return {
-        name: d.name,
-        wins: parseInt(d.wins)
-      };
-    })
-      .then(data => {
-        this.visualizeData(data);
-      })
-      .catch(error => {
-        console.dir(error);
-      });
+    d3.json(
+      "https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/new-york-counties.geojson"
+    ).then(data => {
+      this.visualizeData(data);
+    });
   }
 
-  visualizeData(dataset) {
+  visualizeData(geojson) {
     const svgWidth = 500;
     const svgHeight = 500;
-    const chartIndent = 50;
 
-    dataset.sort((a, b) => a.wins - b.wins);
-    console.dir(dataset);
+    let points = [
+      {
+        name: "Rochester",
+        coords: [-77.6088, 43.1566]
+      },
+      {
+        name: "Syracuse",
+        coords: [-76.1474, 43.0481]
+      },
+      {
+        name: "Buffalo",
+        coords: [-78.8784, 42.8864]
+      }
+    ];
 
     let svg = d3
       .select(ReactDOM.findDOMNode(this.refs.d3Content))
@@ -34,43 +39,55 @@ class MapChart extends Component {
       .attr("width", `${svgWidth}px`)
       .attr("height", `${svgHeight}px`);
 
-    // Plotting data
-    let xScale = d3
-      .scaleBand()
-      .domain(dataset.map(d => d.name))
-      .rangeRound([chartIndent, svgWidth - chartIndent])
-      .padding(0.15)
-      .align(0.1);
+    let projection = d3
+      .geoMercator()
+      .rotate([76 + 35 / 60, -40])
+      .scale([4700])
+      .translate([200, 500]);
 
-    let yScale = d3
-      .scaleLinear()
-      .domain([0, d3.max(dataset, d => d.wins)])
-      .range([svgHeight - chartIndent, chartIndent]);
+    let path = d3.geoPath().projection(projection);
 
     svg
-      .selectAll("rect")
-      .data(dataset, d => d.name)
+      .selectAll("path")
+      .data(geojson.features)
       .enter()
-      .append("rect")
-      .attr("x", d => xScale(d.name))
-      .attr("y", d => yScale(d.wins))
-      .attr("width", xScale.bandwidth())
-      .attr("height", d => svgHeight - chartIndent - yScale(d.wins))
-      .attr("fill", "orange")
-      .attr("stroke", "black");
-
-    // Axes
-    svg
-      .append("g")
-      .attr("class", MapChartStyles.xAxis)
-      .attr("transform", `translate(0, ${svgHeight - chartIndent})`)
-      .call(d3.axisBottom(xScale));
+      .append("path")
+      .attr("d", path)
+      .attr("fill", "lightgray")
+      .attr("stroke", "white");
 
     svg
-      .append("g")
-      .attr("class", MapChartStyles.yAxis)
-      .attr("transform", `translate(${chartIndent}, 0 )`)
-      .call(d3.axisLeft(yScale));
+      .selectAll("circle")
+      .data(points)
+      .enter()
+      .append("circle")
+      .attr("cx", d => projection(d.coords)[0])
+      .attr("cy", d => projection(d.coords)[1])
+      .attr("r", "5px")
+      .attr("fill", "red")
+      .on("mouseover", function(d, i) {
+        d3.select(this)
+          .attr("stroke", "black")
+          .attr("fill", "lightblue");
+      })
+      .on("mouseout", function(d, i) {
+        d3.select(this)
+          .attr("stroke", "none")
+          .attr("fill", "red");
+      });
+
+    svg
+      .selectAll("text")
+      .data(points)
+      .enter()
+      .append("text")
+      .style("font-size", "1em")
+      .style("font-weight", "bold")
+      .style("text-anchor", "middle")
+      .style("cursor", "default")
+      .attr("x", d => projection(d.coords)[0])
+      .attr("y", d => projection(d.coords)[1] - 5)
+      .text(d => d.name);
   }
 
   render() {

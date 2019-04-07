@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import ClusterChartStyles from "./ClusterChart.module.scss";
 import * as d3 from "d3";
 
+// Source: https://d3indepth.com/layouts/
+
 class ClusterChart extends Component {
   componentDidMount() {
     this.visualizeData();
