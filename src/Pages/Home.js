@@ -19,12 +19,31 @@ import TreemapChart from "../Components/TreemapChart";
 import ChoroplethChart from "../Components/ChoroplethChart";
 import CandlestickChart from "../Components/CandlestickChart";
 
+import barImage from "../images/bar.png";
+import lineImage from "../images/line.png";
+import areaImage from "../images/area.png";
+import scatterImage from "../images/scatter.png";
+import pieImage from "../images/pie.png";
+import donutImage from "../images/donut.png";
+import stackedBarImage from "../images/stackedbar.png";
+import stackedAreaImage from "../images/stackedarea.png";
+import forceDirectedImage from "../images/forcedirected.png";
+import chordImage from "../images/chord.png";
+import clusterImage from "../images/cluster.png";
+import packedImage from "../images/packed.png";
+import partitionImage from "../images/partition.png";
+import treeImage from "../images/tree.png";
+import mapImage from "../images/map.png";
+import treeMapImage from "../images/treemap.png";
+import choroplethImage from "../images/choropleth.png";
+import candlestickImage from "../images/candlestick.png";
+
 class Home extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      chart: 18
+      chart: 0
     };
 
     this.setChart = this.setChart.bind(this);
@@ -44,39 +63,145 @@ class Home extends Component {
     return (
       <div className={homeStyles.container}>
         <div className={homeStyles.header}>
-          <span>D3 Visualization Catalog</span>
+          <span
+            className={homeStyles.headerSpan}
+            onClick={() => this.setChart(0)}
+          >
+            D3 Visualization Catalog
+          </span>
         </div>
         {chart === 0 ? (
           <div className={homeStyles.mainContent}>
             <div className={homeStyles.linksBox}>
-              <button onClick={() => this.setChart(1)}>1. Bar Chart</button>
-              <button onClick={() => this.setChart(2)}>2 Line Chart</button>
-              <button onClick={() => this.setChart(3)}>3. Area Chart</button>
-              <button onClick={() => this.setChart(4)}>4. Scatterplot</button>
-              <button onClick={() => this.setChart(5)}>5. Pie Chart</button>
-              <button onClick={() => this.setChart(6)}>6. Donut Chart</button>
-              <button onClick={() => this.setChart(7)}>
-                7. Stacked Bar Chart
-              </button>
-              <button onClick={() => this.setChart(8)}>
-                8. Stacked Area Chart
-              </button>
-              <button onClick={() => this.setChart(9)}>
-                9. Force Directed Graph
-              </button>
-              <button onClick={() => this.setChart(10)}>10. Chord</button>
-              <button onClick={() => this.setChart(11)}>11. Cluster</button>
-              <button onClick={() => this.setChart(12)}>
-                12. Packed Circles
-              </button>
-              <button onClick={() => this.setChart(13)}>13. Partition</button>
-              <button onClick={() => this.setChart(14)}>14. Tree</button>
-              <button onClick={() => this.setChart(15)}>15. Treemap</button>
-              <button onClick={() => this.setChart(16)}>
-                16. Map with points
-              </button>
-              <button onClick={() => this.setChart(17)}>17. Choropleth</button>
-              <button onClick={() => this.setChart(18)}>18. Candlestick</button>
+              <h1>Charts</h1>
+              <h2 className={homeStyles.h2}>Bar Chart</h2>
+              <h2 className={homeStyles.h2}>Line Chart</h2>
+              <h2 className={homeStyles.h2}>Area Chart</h2>
+              <h2 className={homeStyles.h2}>Scatterplot Chart</h2>
+              <img
+                className={homeStyles.image}
+                src={barImage}
+                alt="Bar Chart"
+                onClick={() => this.setChart(1)}
+              />
+              <img
+                className={homeStyles.image}
+                src={lineImage}
+                alt="Line Chart"
+                onClick={() => this.setChart(2)}
+              />
+              <img
+                className={homeStyles.image}
+                src={areaImage}
+                alt="Area Chart"
+                onClick={() => this.setChart(3)}
+              />
+              <img
+                className={homeStyles.image}
+                src={scatterImage}
+                alt="Scatterplot Chart"
+                onClick={() => this.setChart(4)}
+              />
+              <h2 className={homeStyles.h2}>Bar Chart</h2>
+              <h2 className={homeStyles.h2}>Donut Chart</h2>
+              <h2 className={homeStyles.h2}>Stacked Bar Chart</h2>
+              <h2 className={homeStyles.h2}>Stacked Area Chart</h2>
+              <img
+                className={homeStyles.image}
+                src={pieImage}
+                alt="Pie Chart"
+                onClick={() => this.setChart(5)}
+              />
+              <img
+                className={homeStyles.image}
+                src={donutImage}
+                alt="Donut Chart"
+                onClick={() => this.setChart(6)}
+              />
+              <img
+                className={homeStyles.image}
+                src={stackedBarImage}
+                alt="Stacked Bar Chart"
+                onClick={() => this.setChart(7)}
+              />
+              <img
+                className={homeStyles.image}
+                src={stackedAreaImage}
+                alt="Stacked Area Chart"
+                onClick={() => this.setChart(8)}
+              />
+              <h2 className={homeStyles.h2}>Force Directed</h2>
+              <h2 className={homeStyles.h2}>Chord Chart</h2>
+              <h2 className={homeStyles.h2}>Cluster</h2>
+              <h2 className={homeStyles.h2}>Packed Circles</h2>
+              <img
+                className={homeStyles.image}
+                src={forceDirectedImage}
+                alt="Force Directed Graph"
+                onClick={() => this.setChart(9)}
+              />
+              <img
+                className={homeStyles.image}
+                src={chordImage}
+                alt="Chord Chart"
+                onClick={() => this.setChart(10)}
+              />
+              <img
+                className={homeStyles.image}
+                src={clusterImage}
+                alt="Cluster Chart"
+                onClick={() => this.setChart(11)}
+              />
+              <img
+                className={homeStyles.image}
+                src={packedImage}
+                alt="Packed Circles Chart"
+                onClick={() => this.setChart(12)}
+              />
+              <h2 className={homeStyles.h2}>Partition</h2>
+              <h2 className={homeStyles.h2}>Tree</h2>
+              <h2 className={homeStyles.h2}>Treemap</h2>
+              <h2 className={homeStyles.h2}>Map</h2>
+              <img
+                className={homeStyles.image}
+                src={partitionImage}
+                alt="Partition Chart"
+                onClick={() => this.setChart(13)}
+              />
+              <img
+                className={homeStyles.image}
+                src={treeImage}
+                alt="Tree Chart"
+                onClick={() => this.setChart(14)}
+              />
+              <img
+                className={homeStyles.image}
+                src={treeMapImage}
+                alt="Treemap Chart"
+                onClick={() => this.setChart(15)}
+              />
+              <img
+                className={homeStyles.image}
+                src={mapImage}
+                alt="Map Chart"
+                onClick={() => this.setChart(16)}
+              />
+              <h2 className={homeStyles.h2}>Choropleth</h2>
+              <h2 className={homeStyles.h2}>Candlestick</h2>
+              <h2 className={homeStyles.h2}> </h2>
+              <h2 className={homeStyles.h2}> </h2>
+              <img
+                className={homeStyles.image}
+                src={choroplethImage}
+                alt="Choropleth Chart"
+                onClick={() => this.setChart(17)}
+              />
+              <img
+                className={homeStyles.image}
+                src={candlestickImage}
+                alt="Candlestick Chart"
+                onClick={() => this.setChart(18)}
+              />
             </div>
           </div>
         ) : (

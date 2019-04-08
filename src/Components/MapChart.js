@@ -8,9 +8,7 @@ import * as d3 from "d3";
 
 class MapChart extends Component {
   componentDidMount() {
-    d3.json(
-      "https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/new-york-counties.geojson"
-    ).then(data => {
+    d3.json("newyork.json").then(data => {
       this.visualizeData(data);
     });
   }

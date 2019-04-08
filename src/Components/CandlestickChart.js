@@ -30,8 +30,6 @@ class CandlestickChart extends Component {
     const lineWidthPercent = 0.2;
     const barWidthPercent = 0.45;
 
-    console.dir(dataset);
-
     let svg = d3
       .select(ReactDOM.findDOMNode(this.refs.d3Content))
       .append("svg")

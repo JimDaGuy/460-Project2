@@ -2,7 +2,7 @@
   background-color: white;
   margin: 0;
   padding: 0;
-  min-width: 750px;
+  min-width: 1050px;
 }
 
 .header {
@@ -19,11 +19,16 @@
     font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
       "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
     text-transform: uppercase;
+
+    &:hover {
+      color: lightgray;
+      cursor: pointer;
+    }
   }
 }
 
 .mainContent {
-  width: 100%;
+  width: 1000px;
 }
 
 .linksBox {
@@ -38,8 +43,24 @@
     float: left;
     clear: both;
     color: blue;
+  }
+}
 
-    &:hover {
-    }
+.h2 {
+  width: 200px;
+  float: left;
+  margin: 15px;
+  font-size: 1.25em;
+  min-height: 30px;
+}
+
+.image {
+  width: 200px;
+  height: 200px;
+  float: left;
+  margin: 15px;
+
+  &:hover {
+    border: 3px solid black;
   }
 }

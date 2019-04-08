@@ -71,15 +71,7 @@ class ForceDirectedChart extends Component {
       .enter()
       .append("circle")
       .attr("r", 20)
-      .style("fill", (d, i) => {
-        const colors = {
-          0: "purple",
-          1: "lightgreen",
-          2: "blue",
-          3: "blue"
-        };
-        return colors[i] || "orange";
-      })
+      .style("fill", "gray")
       .call(
         d3
           .drag()

@@ -15,10 +15,8 @@ class ChoroplethChart extends Component {
       };
     })
       .then(stateData => {
-        console.dir(stateData);
         d3.json("us-states.json")
           .then(geojson => {
-            console.dir(geojson);
             this.visualizeData(geojson, stateData);
           })
           .catch(error => {
