@@ -25,8 +25,6 @@ class ScatterplotChart extends Component {
     const svgHeight = 500;
     const chartIndent = 50;
 
-    console.dir(dataset);
-
     let svg = d3
       .select(ReactDOM.findDOMNode(this.refs.d3Content))
       .append("svg")
@@ -98,16 +96,18 @@ class ScatterplotChart extends Component {
         <hr />
         <h2 className={ScatterplotChartStyles.chartH2}>Summary</h2>
         <p className={ScatterplotChartStyles.p}>
-          Describes the type of chart and its characteristics. Describes what it
-          is useful for
+          The scatterplot chart can be used to display values for two different
+          sets of data. This is good for showing correlation between the two
+          sets.
         </p>
         <h3 className={ScatterplotChartStyles.chartH3}>Marks</h3>
         <ul>
-          <li>Lines/Bars</li>
+          <li>Points</li>
         </ul>
         <h3 className={ScatterplotChartStyles.chartH3}>Channels</h3>
         <ul>
           <li>Vertical Length (Magnitude)</li>
+          <li>Horizontal Length (Magnitude)</li>
         </ul>
         <div className={ScatterplotChartStyles.d3Content} ref="d3Content" />
       </div>

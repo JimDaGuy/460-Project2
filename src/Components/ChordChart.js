@@ -9,7 +9,6 @@ class ChordChart extends Component {
   }
 
   visualizeData() {
-    // Reference code https://blockbuilder.org/mbostock/4062006
     const svgWidth = 500;
     const svgHeight = 600;
     const legendHeight = 100;
@@ -168,16 +167,22 @@ class ChordChart extends Component {
         <hr />
         <h2 className={ChordChartStyles.chartH2}>Summary</h2>
         <p className={ChordChartStyles.p}>
-          Describes the type of chart and its characteristics. Describes what it
-          is useful for
+          The chord chart can be used to display the inter-relationships between
+          different identities. Each identity is displayed as an arc along a
+          circleand each relationship is displayed as the ribbons in the
+          midddle. The relationships and identities are differentiatied by color
+          hue.
         </p>
         <h3 className={ChordChartStyles.chartH3}>Marks</h3>
         <ul>
-          <li>Lines/Bars</li>
+          <li>Areas/Arcs</li>
+          <li>Areas/Relationship Ribbons</li>
         </ul>
         <h3 className={ChordChartStyles.chartH3}>Channels</h3>
         <ul>
-          <li>Vertical Length (Magnitude)</li>
+          <li>Arc Angle (Magnitude)</li>
+          <li>Ribbon Area (Magnitude)</li>
+          <li>Color Hue (Identity)</li>
         </ul>
         <div className={ChordChartStyles.d3Content} ref="d3Content" />
       </div>

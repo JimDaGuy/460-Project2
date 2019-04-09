@@ -173,16 +173,20 @@ class ChoroplethChart extends Component {
         <hr />
         <h2 className={ChoroplethChartStyles.chartH2}>Summary</h2>
         <p className={ChoroplethChartStyles.p}>
-          Describes the type of chart and its characteristics. Describes what it
-          is useful for
+          The choropleth chart can be used to compare a data value for multiple
+          geographic locations. The shape of each piece of land helps the viewer
+          develop a frame of reference for the geography being presented to
+          them. The color of each shape shows its value in terms of the map's
+          scale.
         </p>
         <h3 className={ChoroplethChartStyles.chartH3}>Marks</h3>
         <ul>
-          <li>Lines/Bars</li>
+          <li>Areas/States</li>
         </ul>
         <h3 className={ChoroplethChartStyles.chartH3}>Channels</h3>
         <ul>
-          <li>Vertical Length (Magnitude)</li>
+          <li>Color Saturation (Magnitude)</li>
+          <li>Shape (Identity)</li>
         </ul>
         <div className={ChoroplethChartStyles.d3Content} ref="d3Content" />
       </div>

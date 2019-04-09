@@ -32,8 +32,6 @@ class StackedAreaChart extends Component {
     const boxSize = 30;
     const textToBoxPadding = 5;
 
-    console.dir(dataset);
-
     let svg = d3
       .select(ReactDOM.findDOMNode(this.refs.d3Content))
       .append("svg")
@@ -183,16 +181,22 @@ class StackedAreaChart extends Component {
         <hr />
         <h2 className={StackedAreaChartStyles.chartH2}>Summary</h2>
         <p className={StackedAreaChartStyles.p}>
-          Describes the type of chart and its characteristics. Describes what it
-          is useful for
+          The stacked area chart is similar to the area chart, but it allows for
+          multiple categories of data over the course of time. The areas are
+          stacked on top of each other like the stacked bar chart. This chart is
+          good for comparing the magnitude of values for multiple categories of
+          data at once.
         </p>
         <h3 className={StackedAreaChartStyles.chartH3}>Marks</h3>
         <ul>
-          <li>Lines/Bars</li>
+          <li>Area</li>
         </ul>
         <h3 className={StackedAreaChartStyles.chartH3}>Channels</h3>
         <ul>
-          <li>Vertical Length (Magnitude)</li>
+          <li>Vertical position (Magnitude)</li>
+          <li>Horizontal Position (Magnitude)</li>
+          <li>Slope/Tilt (Magnitude)</li>
+          <li>Color Hue (Identity)</li>
         </ul>
         <div className={StackedAreaChartStyles.d3Content} ref="d3Content" />
       </div>

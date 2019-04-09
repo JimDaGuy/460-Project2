@@ -126,8 +126,12 @@ class CandlestickChart extends Component {
         <hr />
         <h2 className={CandlestickChartStyles.chartH2}>Summary</h2>
         <p className={CandlestickChartStyles.p}>
-          Describes the type of chart and its characteristics. Describes what it
-          is useful for
+          The candlestick chart clearly shows four different pieces of
+          information in a very effiecient way. The smaller light gray bar shows
+          the upper and lower limits for each day, while the green and red bars
+          show the increase or decrease for that day. The green shows an
+          increase and the red shows a decrease. This chart is most commonly
+          used to display stocks information.
         </p>
         <h3 className={CandlestickChartStyles.chartH3}>Marks</h3>
         <ul>
@@ -136,6 +140,8 @@ class CandlestickChart extends Component {
         <h3 className={CandlestickChartStyles.chartH3}>Channels</h3>
         <ul>
           <li>Vertical Length (Magnitude)</li>
+          <li>Horizontal Position (Magnitude)</li>
+          <li>Color Hue (Magnitude)</li>
         </ul>
         <div className={CandlestickChartStyles.d3Content} ref="d3Content" />
       </div>

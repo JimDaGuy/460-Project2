@@ -26,7 +26,6 @@ class AreaChart extends Component {
     const chartIndent = 50;
 
     dataset.sort((a, b) => a.date - b.date);
-    console.dir(dataset);
 
     let svg = d3
       .select(ReactDOM.findDOMNode(this.refs.d3Content))
@@ -96,16 +95,18 @@ class AreaChart extends Component {
         <hr />
         <h2 className={AreaChartStyles.chartH2}>Summary</h2>
         <p className={AreaChartStyles.p}>
-          Describes the type of chart and its characteristics. Describes what it
-          is useful for
+          The area chart is often used to show data values over the course of
+          time. While it is similar to the line chart, the plain area chart only
+          displays one category of data over time.
         </p>
         <h3 className={AreaChartStyles.chartH3}>Marks</h3>
         <ul>
-          <li>Lines/Bars</li>
+          <li>Area</li>
         </ul>
         <h3 className={AreaChartStyles.chartH3}>Channels</h3>
         <ul>
-          <li>Vertical Length (Magnitude)</li>
+          <li>Vertical/Horizontal position of points (Magnitude)</li>
+          <li>Slope/Tilt (Magnitude)</li>
         </ul>
         <div className={AreaChartStyles.d3Content} ref="d3Content" />
       </div>

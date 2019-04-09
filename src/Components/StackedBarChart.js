@@ -32,8 +32,6 @@ class StackedBarChart extends Component {
     const boxSize = 30;
     const textToBoxPadding = 5;
 
-    console.dir(dataset);
-
     let svg = d3
       .select(ReactDOM.findDOMNode(this.refs.d3Content))
       .append("svg")
@@ -193,8 +191,10 @@ class StackedBarChart extends Component {
         <hr />
         <h2 className={StackedBarChartStyles.chartH2}>Summary</h2>
         <p className={StackedBarChartStyles.p}>
-          Describes the type of chart and its characteristics. Describes what it
-          is useful for
+          The stacked bar chart is similar to the bar chart, but it stacks
+          multiple bars on top of each other. This can be used to compare
+          multiples values that together make up the same category. They are
+          typically more effective with a smaller ammount of stacked categories.
         </p>
         <h3 className={StackedBarChartStyles.chartH3}>Marks</h3>
         <ul>
@@ -203,6 +203,8 @@ class StackedBarChart extends Component {
         <h3 className={StackedBarChartStyles.chartH3}>Channels</h3>
         <ul>
           <li>Vertical Length (Magnitude)</li>
+          <li>Horizontal Position (Magnitude)</li>
+          <li>Color Hue (Identity)</li>
         </ul>
         <div className={StackedBarChartStyles.d3Content} ref="d3Content" />
       </div>

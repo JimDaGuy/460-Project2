@@ -3,8 +3,6 @@ import ReactDOM from "react-dom";
 import TreeChartStyles from "./TreeChart.module.scss";
 import * as d3 from "d3";
 
-// Source : https://codepen.io/netkuy/pen/qZGdoj?editors=1010
-
 class TreeChart extends Component {
   componentDidMount() {
     this.visualizeData();
@@ -28,8 +26,7 @@ class TreeChart extends Component {
           ]
         },
         {
-          name: "Third 3",
-          children: [{ name: "Child1" }, { name: "Child2" }, { name: "Child3" }]
+          name: "Third 3"
         },
         {
           name: "Fourth 4",
@@ -100,16 +97,20 @@ class TreeChart extends Component {
         <hr />
         <h2 className={TreeChartStyles.chartH2}>Summary</h2>
         <p className={TreeChartStyles.p}>
-          Describes the type of chart and its characteristics. Describes what it
-          is useful for
+          The tree chart can be used to display hierarchical data using points
+          and connections between that data using lines. The tree chart tells a
+          slightly different story from the cluster chart because it determines
+          the height of each node based on its depth in the hierarchy of the
+          data.
         </p>
         <h3 className={TreeChartStyles.chartH3}>Marks</h3>
         <ul>
-          <li>Lines/Bars</li>
+          <li>Points/Nodes</li>
+          <li>Lines/Connections</li>
         </ul>
         <h3 className={TreeChartStyles.chartH3}>Channels</h3>
         <ul>
-          <li>Vertical Length (Magnitude)</li>
+          <li>Line Connection (Identity)</li>
         </ul>
         <div className={TreeChartStyles.d3Content} ref="d3Content" />
       </div>

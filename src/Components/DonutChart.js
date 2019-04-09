@@ -143,16 +143,20 @@ class DonutChart extends Component {
         <hr />
         <h2 className={DonutChartStyles.chartH2}>Summary</h2>
         <p className={DonutChartStyles.p}>
-          Describes the type of chart and its characteristics. Describes what it
-          is useful for
+          The donut chart is very similar to the pie chart. It just has a hole
+          in the center like a donut. The donut chart can be used to compare the
+          magnitude of a single data value between multiple identities. The
+          central angle of each slice will scale along with the compared data
+          value.
         </p>
         <h3 className={DonutChartStyles.chartH3}>Marks</h3>
         <ul>
-          <li>Lines/Bars</li>
+          <li>Donut Slices / Area</li>
         </ul>
         <h3 className={DonutChartStyles.chartH3}>Channels</h3>
         <ul>
-          <li>Vertical Length (Magnitude)</li>
+          <li>Donut Slice Angle (Magnitude)</li>
+          <li>Color Hue (Identity)</li>
         </ul>
         <div className={DonutChartStyles.d3Content} ref="d3Content" />
       </div>

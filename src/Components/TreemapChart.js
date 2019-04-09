@@ -4,8 +4,6 @@ import TreemapChartStyles from "./TreemapChart.module.scss";
 import * as d3 from "d3";
 import data from "../data/TreemapChart.csv";
 
-// Source https://bl.ocks.org/denjn5/bb835c4fb8923ee65a13008832d2efed
-
 class TreemapChart extends Component {
   componentDidMount() {
     d3.csv(data, d => {
@@ -87,16 +85,19 @@ class TreemapChart extends Component {
         <hr />
         <h2 className={TreemapChartStyles.chartH2}>Summary</h2>
         <p className={TreemapChartStyles.p}>
-          Describes the type of chart and its characteristics. Describes what it
-          is useful for
+          The treemap chart is very similar to the packed circles chart in
+          function. It can be used to compare the magnitude of multiple
+          subcategories of data. The treemap chart however, uses rectangular
+          areas to represent the magnitude of each subcategory.
         </p>
         <h3 className={TreemapChartStyles.chartH3}>Marks</h3>
         <ul>
-          <li>Lines/Bars</li>
+          <li>Area/Rectangles</li>
         </ul>
         <h3 className={TreemapChartStyles.chartH3}>Channels</h3>
         <ul>
-          <li>Vertical Length (Magnitude)</li>
+          <li>Area (magnitude)</li>
+          <li>Color Hue (Identity)</li>
         </ul>
         <div className={TreemapChartStyles.d3Content} ref="d3Content" />
       </div>

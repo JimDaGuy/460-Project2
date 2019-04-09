@@ -25,7 +25,6 @@ class BarChart extends Component {
     const svgHeight = 500;
 
     dataset.sort((a, b) => a.wins - b.wins);
-    console.dir(dataset);
 
     let svg = d3
       .select(ReactDOM.findDOMNode(this.refs.d3Content))

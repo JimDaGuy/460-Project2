@@ -26,7 +26,6 @@ class LineChart extends Component {
     const svgHeight = 550;
     const legendHeight = 100;
 
-    console.dir(dataset);
     const parseLines = dataset => {
       let linesObj = {};
       for (let i = 0; i < dataset.length; i++) {
@@ -213,7 +212,7 @@ class LineChart extends Component {
         <ul>
           <li>Vertical/Horizontal position of points (Magnitude)</li>
           <li>Slope/Tilt (Magnitude)</li>
-          <li>Color Hue (Catagorical)</li>
+          <li>Color Hue (Identity)</li>
         </ul>
         <div className={LineChartStyles.d3Content} ref="d3Content" />
       </div>

@@ -87,16 +87,18 @@ class PartitionChart extends Component {
         <hr />
         <h2 className={PartitionChartStyles.chartH2}>Summary</h2>
         <p className={PartitionChartStyles.p}>
-          Describes the type of chart and its characteristics. Describes what it
-          is useful for
+          The partition chart can be used to display hierarchical data. The
+          color of each rectangle shows the depth of the node and its position
+          below the parent node shows its relationship to it.
         </p>
         <h3 className={PartitionChartStyles.chartH3}>Marks</h3>
         <ul>
-          <li>Lines/Bars</li>
+          <li>Lines/Rectangles</li>
         </ul>
         <h3 className={PartitionChartStyles.chartH3}>Channels</h3>
         <ul>
-          <li>Vertical Length (Magnitude)</li>
+          <li>Spacial Region (Identity)</li>
+          <li>Color Hue (Identity)</li>
         </ul>
         <div className={PartitionChartStyles.d3Content} ref="d3Content" />
       </div>

@@ -3,9 +3,6 @@ import ReactDOM from "react-dom";
 import MapChartStyles from "./MapChart.module.scss";
 import * as d3 from "d3";
 
-// Source 1: https://github.com/veltman/d3-stateplane
-// Source 2: http://bl.ocks.org/phil-pedruco/7745589
-
 class MapChart extends Component {
   componentDidMount() {
     d3.json("newyork.json").then(data => {
@@ -90,16 +87,18 @@ class MapChart extends Component {
         <hr />
         <h2 className={MapChartStyles.chartH2}>Summary</h2>
         <p className={MapChartStyles.p}>
-          Describes the type of chart and its characteristics. Describes what it
-          is useful for
+          The map chart can be used to display the location of different places.
+          The shape of each piece of land helps the viewer develop a frame of
+          reference for the plotted locations.
         </p>
         <h3 className={MapChartStyles.chartH3}>Marks</h3>
         <ul>
-          <li>Lines/Bars</li>
+          <li>Areas/States</li>
+          <li>Points/Cities</li>
         </ul>
         <h3 className={MapChartStyles.chartH3}>Channels</h3>
         <ul>
-          <li>Vertical Length (Magnitude)</li>
+          <li>Shape (Identity)</li>
         </ul>
         <div className={MapChartStyles.d3Content} ref="d3Content" />
       </div>

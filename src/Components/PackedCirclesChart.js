@@ -14,105 +14,105 @@ class PackedCirclesChart extends Component {
     const chartIndent = 50;
 
     let packedData = {
-      name: "parent",
+      name: "Categories",
       children: [
         {
-          name: "parent",
+          name: "Cat A",
           children: [
             {
-              name: "child",
+              name: "Cat A1",
               value: 27
             },
             {
-              name: "child",
+              name: "Cat A2",
               value: 105
             },
             {
-              name: "child",
+              name: "Cat A3",
               value: 63
             },
             {
-              name: "child",
+              name: "Cat A4",
               value: 233
             }
           ]
         },
         {
-          name: "parent",
+          name: "Cat B",
           children: [
             {
-              name: "child",
+              name: "Cat B1",
               value: 267
             },
             {
-              name: "child",
+              name: "Cat B2",
               value: 290
             },
             {
-              name: "child",
+              name: "Cat B3",
               value: 43
             },
             {
-              name: "child",
+              name: "Cat B4",
               value: 83
             }
           ]
         },
         {
-          name: "parent",
+          name: "Cat C",
           children: [
             {
-              name: "child",
+              name: "Cat C1",
               value: 277
             },
             {
-              name: "child",
+              name: "Cat C2",
               value: 312
             },
             {
-              name: "child",
+              name: "Cat C3",
               value: 56
             },
             {
-              name: "child",
+              name: "Cat C4",
               value: 300
             },
             {
-              name: "child",
+              name: "Cat C5",
               value: 109
             },
             {
-              name: "child",
+              name: "Cat C6",
               value: 135
             }
           ]
         },
         {
-          name: "parent",
+          name: "Cat D",
           children: [
             {
-              name: "child",
+              name: "Cat D1",
               value: 65
             },
             {
-              name: "child",
+              name: "Cat D2",
               value: 45
             },
             {
-              name: "child",
+              name: "Cat D3",
               value: 69
             }
           ]
         },
         {
-          name: "parent",
+          name: "Cat E",
           children: [
             {
-              name: "child",
+              name: "Cat E1",
               value: 217
             },
             {
-              name: "child",
+              name: "Cat E2",
               value: 240
             }
           ]
@@ -171,16 +171,19 @@ class PackedCirclesChart extends Component {
         <hr />
         <h2 className={PackedCirclesChartStyles.chartH2}>Summary</h2>
         <p className={PackedCirclesChartStyles.p}>
-          Describes the type of chart and its characteristics. Describes what it
-          is useful for
+          The packed circles chart can be used to compare the magnitude of
+          multiple subcategories of data. The top level circle represents the
+          main category while all the circles inside of it have area
+          proportional to their parent's value.
         </p>
         <h3 className={PackedCirclesChartStyles.chartH3}>Marks</h3>
         <ul>
-          <li>Lines/Bars</li>
+          <li>Area/Circles</li>
         </ul>
         <h3 className={PackedCirclesChartStyles.chartH3}>Channels</h3>
         <ul>
-          <li>Vertical Length (Magnitude)</li>
+          <li>Area (Magnitude)</li>
+          <li>Color Hue (Identity)</li>
         </ul>
         <div className={PackedCirclesChartStyles.d3Content} ref="d3Content" />
       </div>

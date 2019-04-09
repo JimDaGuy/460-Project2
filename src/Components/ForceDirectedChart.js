@@ -15,8 +15,6 @@ class ForceDirectedChart extends Component {
         { name: "IGME102" }, // 5
         { name: "IGME116" }, // 6
         { name: "IGME206" } // 7
-
-        // 5 > 3
       ],
       edges: [
         { source: 5, target: 2 },
@@ -35,7 +33,6 @@ class ForceDirectedChart extends Component {
   visualizeData(dataset) {
     const svgWidth = 500;
     const svgHeight = 500;
-    console.dir(dataset);
 
     let svg = d3
       .select(ReactDOM.findDOMNode(this.refs.d3Content))
@@ -72,6 +69,16 @@ class ForceDirectedChart extends Component {
       .append("circle")
       .attr("r", 20)
       .style("fill", "gray")
+      .style("fill", (d, i) => {
+        const scheme = d3.schemeAccent;
+        const colors = {
+          0: scheme[0],
+          1: scheme[1],
+          2: scheme[2],
+          3: scheme[2]
+        };
+        return colors[i] || scheme[3];
+      })
       .call(
         d3
           .drag()
@@ -129,16 +136,20 @@ class ForceDirectedChart extends Component {
         <hr />
         <h2 className={ForceDirectedChartStyles.chartH2}>Summary</h2>
         <p className={ForceDirectedChartStyles.p}>
-          Describes the type of chart and its characteristics. Describes what it
-          is useful for
+          The force directed graph can be used to show connections between many
+          different nodes. It can also use color to differentiate certain
+          categories of nodes. This is good for display complex jumbles of
+          connections in a visually pleasing and understandable way.
         </p>
         <h3 className={ForceDirectedChartStyles.chartH3}>Marks</h3>
         <ul>
-          <li>Lines/Bars</li>
+          <li>Points/Nodes</li>
+          <li>Lines/Connections</li>
         </ul>
         <h3 className={ForceDirectedChartStyles.chartH3}>Channels</h3>
         <ul>
-          <li>Vertical Length (Magnitude)</li>
+          <li>Line Connection (Identity)</li>
+          <li>Color Hue (Identity)</li>
         </ul>
         <div className={ForceDirectedChartStyles.d3Content} ref="d3Content" />
       </div>

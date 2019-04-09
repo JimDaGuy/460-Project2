@@ -142,16 +142,18 @@ class PieChart extends Component {
         <hr />
         <h2 className={PieChartStyles.chartH2}>Summary</h2>
         <p className={PieChartStyles.p}>
-          Describes the type of chart and its characteristics. Describes what it
-          is useful for
+          The pie chart can be used to compare the magnitude of a single data
+          value between multiple identities. The central angle of each slice
+          will scale along with the compared data value.
         </p>
         <h3 className={PieChartStyles.chartH3}>Marks</h3>
         <ul>
-          <li>Lines/Bars</li>
+          <li>Pie Slices / Area</li>
         </ul>
         <h3 className={PieChartStyles.chartH3}>Channels</h3>
         <ul>
-          <li>Vertical Length (Magnitude)</li>
+          <li>Pie Slice Angle (Magnitude)</li>
+          <li>Color Hue (Identity)</li>
         </ul>
         <div className={PieChartStyles.d3Content} ref="d3Content" />
       </div>

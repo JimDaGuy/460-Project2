@@ -3,14 +3,12 @@ import ReactDOM from "react-dom";
 import ClusterChartStyles from "./ClusterChart.module.scss";
 import * as d3 from "d3";
 
-// Source: https://d3indepth.com/layouts/
-
 class ClusterChart extends Component {
   componentDidMount() {
     this.visualizeData();
   }
 
-  visualizeData(dataset) {
+  visualizeData() {
     const svgWidth = 500;
     const svgHeight = 500;
     const chartIndent = 50;
@@ -101,16 +99,20 @@ class ClusterChart extends Component {
         <hr />
         <h2 className={ClusterChartStyles.chartH2}>Summary</h2>
         <p className={ClusterChartStyles.p}>
-          Describes the type of chart and its characteristics. Describes what it
-          is useful for
+          The cluster chart is similar to the tree chart. The cluster chart can
+          be used to display hierarchical data using points and connections
+          between that data using lines. The cluster chart is different from the
+          tree chart by showing all leaf nodes at the same bottom level,
+          regardless of depth.
         </p>
         <h3 className={ClusterChartStyles.chartH3}>Marks</h3>
         <ul>
-          <li>Lines/Bars</li>
+          <li>Points/Nodes</li>
+          <li>Lines/Connections</li>
         </ul>
         <h3 className={ClusterChartStyles.chartH3}>Channels</h3>
         <ul>
-          <li>Vertical Length (Magnitude)</li>
+          <li>Line Connection (Identity)</li>
         </ul>
         <div className={ClusterChartStyles.d3Content} ref="d3Content" />
       </div>
