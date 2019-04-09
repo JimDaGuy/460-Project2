@@ -96,13 +96,18 @@ class BarChart extends Component {
         <hr />
         <h2 className={BarChartStyles.chartH2}>Summary</h2>
         <p className={BarChartStyles.p}>
-          Describes the type of chart and its characteristics. Describes what it
-          is useful for
+          The bar chart is a very basic and fairly straightforward chart. Bar
+          charts are useful for the comparison of values among different
+          categories or times.
         </p>
         <h3 className={BarChartStyles.chartH3}>Marks</h3>
-        <p className={BarChartStyles.p}>Describes the marks</p>
+        <ul>
+          <li>Lines/Bars</li>
+        </ul>
         <h3 className={BarChartStyles.chartH3}>Channels</h3>
-        <p className={BarChartStyles.p}>Describes the channels</p>
+        <ul>
+          <li>Vertical Length (Magnitude)</li>
+        </ul>
         <div className={BarChartStyles.d3Content} ref="d3Content" />
       </div>
     );

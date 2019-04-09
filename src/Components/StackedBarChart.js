@@ -25,7 +25,7 @@ class StackedBarChart extends Component {
   visualizeData(dataset) {
     const svgWidth = 500;
     const svgHeight = 600;
-    const chartIndent = 50;
+    const chartIndent = 70;
     const legendHeight = 100;
     const legendPaddingX = 10;
     const legendPaddingY = 10;
@@ -45,11 +45,10 @@ class StackedBarChart extends Component {
     let stackedData = stack(dataset);
 
     let extent = d3.extent(dataset, d => d.date);
-    let endDate = new Date(extent[1].getFullYear(), extent[1].getMonth() + 1);
 
     let xScale = d3
       .scaleTime()
-      .domain([extent[0], endDate])
+      .domain(extent)
       .range([chartIndent, svgWidth - chartIndent]);
 
     let yScale = d3
@@ -66,14 +65,14 @@ class StackedBarChart extends Component {
       .append("g")
       .style("fill", (d, i) => cScale(i));
 
-    let barlen = (svgWidth - chartIndent * 2) / dataset.length - 4;
+    let barlen = (svgWidth - chartIndent * 2) / dataset.length - 10;
 
     groups
       .selectAll("rect")
       .data(d => d)
       .enter()
       .append("rect")
-      .attr("x", d => xScale(d.data.date) + 4)
+      .attr("x", d => xScale(d.data.date) - barlen / 2)
       .attr("y", d => yScale(d[1]))
       .attr("width", barlen)
       .attr("height", d => yScale(d[0]) - yScale(d[1]))
@@ -93,12 +92,12 @@ class StackedBarChart extends Component {
         "transform",
         `translate(0, ${svgHeight - chartIndent - legendHeight})`
       )
-      .call(d3.axisBottom(xScale));
+      .call(d3.axisBottom(xScale).tickFormat(d3.timeFormat("%b")));
 
     svg
       .append("g")
       .attr("class", StackedBarChartStyles.yAxis)
-      .attr("transform", `translate(${chartIndent}, 0 )`)
+      .attr("transform", `translate(${chartIndent - barlen / 2 - 4}, 0 )`)
       .call(d3.axisLeft(yScale).tickFormat(d => `$${d}`));
 
     // Axis Labels
@@ -110,7 +109,10 @@ class StackedBarChart extends Component {
       .style("alignment-baseline", "middle")
       .attr(
         "transform",
-        `translate(${svgWidth / 2},${svgHeight - legendHeight - 10})`
+        `translate(${svgWidth / 2},${svgHeight -
+          legendHeight -
+          chartIndent +
+          30})`
       );
 
     svg
@@ -121,7 +123,9 @@ class StackedBarChart extends Component {
       .style("alignment-baseline", "middle")
       .attr(
         "transform",
-        `translate(10 ,${(svgHeight - legendHeight) / 2}) rotate(270)`
+        `translate(${chartIndent - barlen / 2 - 44} ,${(svgHeight -
+          legendHeight) /
+          2}) rotate(270)`
       );
 
     // Create Legend
@@ -145,7 +149,7 @@ class StackedBarChart extends Component {
         const initialHeight = svgHeight - legendHeight + legendPaddingY;
         const row = Math.floor(i / 3);
         const height = initialHeight + row * (30 + legendPaddingY);
-        return height;
+        return height - 30;
       })
       .attr("width", boxSize)
       .attr("height", boxSize)
@@ -176,7 +180,7 @@ class StackedBarChart extends Component {
         const row = Math.floor(i / 3);
         const y = initialHeight + 15 + row * (30 + legendPaddingY);
 
-        return `translate(${x},${y})`;
+        return `translate(${x},${y - 30})`;
       })
       .style("alignment-baseline", "middle")
       .style("text-align", "left");
@@ -193,9 +197,13 @@ class StackedBarChart extends Component {
           is useful for
         </p>
         <h3 className={StackedBarChartStyles.chartH3}>Marks</h3>
-        <p className={StackedBarChartStyles.p}>Describes the marks</p>
+        <ul>
+          <li>Lines/Bars</li>
+        </ul>
         <h3 className={StackedBarChartStyles.chartH3}>Channels</h3>
-        <p className={StackedBarChartStyles.p}>Describes the channels</p>
+        <ul>
+          <li>Vertical Length (Magnitude)</li>
+        </ul>
         <div className={StackedBarChartStyles.d3Content} ref="d3Content" />
       </div>
     );

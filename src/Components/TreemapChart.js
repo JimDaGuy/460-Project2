@@ -91,9 +91,13 @@ class TreemapChart extends Component {
           is useful for
         </p>
         <h3 className={TreemapChartStyles.chartH3}>Marks</h3>
-        <p className={TreemapChartStyles.p}>Describes the marks</p>
+        <ul>
+          <li>Lines/Bars</li>
+        </ul>
         <h3 className={TreemapChartStyles.chartH3}>Channels</h3>
-        <p className={TreemapChartStyles.p}>Describes the channels</p>
+        <ul>
+          <li>Vertical Length (Magnitude)</li>
+        </ul>
         <div className={TreemapChartStyles.d3Content} ref="d3Content" />
       </div>
     );

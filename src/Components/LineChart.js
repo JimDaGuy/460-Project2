@@ -201,13 +201,20 @@ class LineChart extends Component {
         <hr />
         <h2 className={LineChartStyles.chartH2}>Summary</h2>
         <p className={LineChartStyles.p}>
-          Describes the type of chart and its characteristics. Describes what it
-          is useful for
+          The line chart is often used to show data values over the course of
+          time. Plotting multiple lines allows for a comparison between
+          different categories over time or another factor.
         </p>
         <h3 className={LineChartStyles.chartH3}>Marks</h3>
-        <p className={LineChartStyles.p}>Describes the marks</p>
+        <ul>
+          <li>Lines</li>
+        </ul>
         <h3 className={LineChartStyles.chartH3}>Channels</h3>
-        <p className={LineChartStyles.p}>Describes the channels</p>
+        <ul>
+          <li>Vertical/Horizontal position of points (Magnitude)</li>
+          <li>Slope/Tilt (Magnitude)</li>
+          <li>Color Hue (Catagorical)</li>
+        </ul>
         <div className={LineChartStyles.d3Content} ref="d3Content" />
       </div>
     );

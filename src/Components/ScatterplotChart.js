@@ -102,9 +102,13 @@ class ScatterplotChart extends Component {
           is useful for
         </p>
         <h3 className={ScatterplotChartStyles.chartH3}>Marks</h3>
-        <p className={ScatterplotChartStyles.p}>Describes the marks</p>
+        <ul>
+          <li>Lines/Bars</li>
+        </ul>
         <h3 className={ScatterplotChartStyles.chartH3}>Channels</h3>
-        <p className={ScatterplotChartStyles.p}>Describes the channels</p>
+        <ul>
+          <li>Vertical Length (Magnitude)</li>
+        </ul>
         <div className={ScatterplotChartStyles.d3Content} ref="d3Content" />
       </div>
     );

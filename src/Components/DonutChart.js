@@ -147,9 +147,13 @@ class DonutChart extends Component {
           is useful for
         </p>
         <h3 className={DonutChartStyles.chartH3}>Marks</h3>
-        <p className={DonutChartStyles.p}>Describes the marks</p>
+        <ul>
+          <li>Lines/Bars</li>
+        </ul>
         <h3 className={DonutChartStyles.chartH3}>Channels</h3>
-        <p className={DonutChartStyles.p}>Describes the channels</p>
+        <ul>
+          <li>Vertical Length (Magnitude)</li>
+        </ul>
         <div className={DonutChartStyles.d3Content} ref="d3Content" />
       </div>
     );

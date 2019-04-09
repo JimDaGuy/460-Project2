@@ -104,9 +104,13 @@ class TreeChart extends Component {
           is useful for
         </p>
         <h3 className={TreeChartStyles.chartH3}>Marks</h3>
-        <p className={TreeChartStyles.p}>Describes the marks</p>
+        <ul>
+          <li>Lines/Bars</li>
+        </ul>
         <h3 className={TreeChartStyles.chartH3}>Channels</h3>
-        <p className={TreeChartStyles.p}>Describes the channels</p>
+        <ul>
+          <li>Vertical Length (Magnitude)</li>
+        </ul>
         <div className={TreeChartStyles.d3Content} ref="d3Content" />
       </div>
     );

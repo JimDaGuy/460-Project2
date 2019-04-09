@@ -9,10 +9,18 @@
   align-items: center;
 }
 
+.chartType {
+  margin-top: 25px;
+}
+
 .svg {
   background-color: white;
 }
 
 .edge {
   stroke: lightblue;
+}
+
+.p {
+  max-width: 40%;
 }

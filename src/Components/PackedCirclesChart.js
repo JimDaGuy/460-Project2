@@ -175,9 +175,13 @@ class PackedCirclesChart extends Component {
           is useful for
         </p>
         <h3 className={PackedCirclesChartStyles.chartH3}>Marks</h3>
-        <p className={PackedCirclesChartStyles.p}>Describes the marks</p>
+        <ul>
+          <li>Lines/Bars</li>
+        </ul>
         <h3 className={PackedCirclesChartStyles.chartH3}>Channels</h3>
-        <p className={PackedCirclesChartStyles.p}>Describes the channels</p>
+        <ul>
+          <li>Vertical Length (Magnitude)</li>
+        </ul>
         <div className={PackedCirclesChartStyles.d3Content} ref="d3Content" />
       </div>
     );

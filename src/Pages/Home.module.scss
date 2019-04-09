@@ -2,20 +2,23 @@
   background-color: white;
   margin: 0;
   padding: 0;
-  min-width: 1050px;
+  min-width: 1000px;
 }
 
 .header {
-  width: 100%;
+  min-width: 100%;
   height: 40px;
   background-color: black;
   color: white;
   display: flex;
   align-items: center;
+  position: fixed;
+  top: 0;
 
   span {
     text-indent: 25px;
-    font-size: 1.1em;
+    margin-right: 15px;
+    font-size: 0.9em;
     font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
       "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
     text-transform: uppercase;
@@ -28,39 +31,66 @@
 }
 
 .mainContent {
-  width: 1000px;
 }
 
 .linksBox {
-  margin: 10px;
+  overflow: auto;
+  width: 80%;
+  margin: 0 auto 20px auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.h1 {
+  text-align: center;
+  margin: 35px auto 0 auto;
+}
+
+.linkContainer {
+  width: 230px;
   padding: 10px;
+  margin: 10px auto;
+  overflow: auto;
   background-color: lightgray;
   border: 1px solid black;
   color: black;
-  overflow: auto;
-
-  button {
-    float: left;
-    clear: both;
-    color: blue;
-  }
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .h2 {
-  width: 200px;
-  float: left;
-  margin: 15px;
-  font-size: 1.25em;
-  min-height: 30px;
+  font-size: 1.3em;
 }
 
 .image {
   width: 200px;
   height: 200px;
-  float: left;
-  margin: 15px;
+  margin: 10px auto;
 
   &:hover {
     border: 3px solid black;
   }
+}
+
+.buttonContainer {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  align-content: center;
+  align-items: center;
+}
+
+.button {
+  margin: 0 auto;
+  border: none;
+  background-color: black;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 8px;
+  font-size: 22px;
+  cursor: pointer;
 }
