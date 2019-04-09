@@ -9,11 +9,15 @@ class About extends Component {
         <hr />
         <h2 className={AboutStyles.h2}>What is this?</h2>
         <p className={AboutStyles.p}>
-          Made by James DiGrazia as part of data vis class at rit etc etc What
-          is the site, what the reader should get out of it, how to use it, and
-          how it was developed. Any outside materials you use or reference
-          heavily should be credited (i.e., the book, the D3 project website,
-          etc.).
+          This site displays multiple different types of data visualizations and
+          some info about each of them. It was made by <b>James DiGrazia</b> as
+          a project for the IGME Data Visualization class at RIT. Each
+          visualization was made with <b>d3</b>. Click on the different images
+          on the home page to view more information about them. You can view the
+          code for this project on{" "}
+          <b>
+            <a href="https://github.com/JimDaGuy/460-Project2">Github</a>
+          </b>
         </p>
         <h2 className={AboutStyles.h2}>Sources</h2>
         <p className={AboutStyles.p}>
@@ -29,6 +33,9 @@ class About extends Component {
             <li>
               Referenced for some visualiztion descriptions and generel info:{" "}
               <a href="https://www.r-graph-gallery.com/">R Graph gallery</a>
+            </li>
+            <li>
+              Referenced code from class examples for the Force Directed Graph
             </li>
             <li>
               Referenced code for chord chart:{" "}
@@ -63,6 +70,10 @@ class About extends Component {
               <a href="http://bl.ocks.org/michellechandra/0b2ce4923dc9b5809922">
                 Source
               </a>
+            </li>
+            <li>
+              Referenced code for choropleth chart:{" "}
+              <a href="https://github.com/JimDaGuy/460-Project1">Source</a>
             </li>
           </ul>
         </p>

@@ -131,7 +131,7 @@ class StackedBarChart extends Component {
 
     // Boxes
     svg
-      .selectAll(".bop")
+      .selectAll(".boxes")
       .data(categories)
       .enter()
       .append("rect")
@@ -158,7 +158,7 @@ class StackedBarChart extends Component {
 
     // Text
     svg
-      .selectAll(".dop")
+      .selectAll(".legendText")
       .data(categories)
       .enter()
       .append("text")

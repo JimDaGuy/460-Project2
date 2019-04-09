@@ -86,7 +86,7 @@ class StackedAreaChart extends Component {
         "transform",
         `translate(0, ${svgHeight - chartIndent - legendHeight})`
       )
-      .call(d3.axisBottom(xScale));
+      .call(d3.axisBottom(xScale).tickFormat(d3.timeFormat("%b")));
 
     svg
       .append("g")
@@ -121,7 +121,7 @@ class StackedAreaChart extends Component {
 
     // Boxes
     svg
-      .selectAll(".bop")
+      .selectAll(".boxes")
       .data(dataset.columns.slice(2))
       .enter()
       .append("rect")
@@ -148,7 +148,7 @@ class StackedAreaChart extends Component {
 
     // Text
     svg
-      .selectAll(".dop")
+      .selectAll(".legendText")
       .data(dataset.columns.slice(2))
       .enter()
       .append("text")

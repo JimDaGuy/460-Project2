@@ -36,7 +36,6 @@ class CandlestickChart extends Component {
       .attr("width", `${svgWidth}px`)
       .attr("height", `${svgHeight}px`);
 
-    // Plotting data
     let xScale = d3
       .scaleTime()
       .domain(d3.extent(dataset, d => d.date))
@@ -53,11 +52,11 @@ class CandlestickChart extends Component {
       .data(dataset)
       .enter()
       .append("rect")
-      // X - Half of bar width
       .attr("x", d => {
         const initialXPos = xScale(d.date);
         const lineWidth =
           ((svgWidth - chartIndent * 2) / dataset.length) * lineWidthPercent;
+        // X - Half of bar width
         return initialXPos - lineWidth / 2;
       })
       .attr("y", d => {
@@ -78,11 +77,11 @@ class CandlestickChart extends Component {
       .data(dataset)
       .enter()
       .append("rect")
-      // X - Half of bar width
       .attr("x", d => {
         const initialXPos = xScale(d.date);
         const lineWidth =
           ((svgWidth - chartIndent * 2) / dataset.length) * barWidthPercent;
+        // X - Half of bar width
         return initialXPos - lineWidth / 2;
       })
       .attr("y", d => {
@@ -131,7 +130,7 @@ class CandlestickChart extends Component {
           the upper and lower limits for each day, while the green and red bars
           show the increase or decrease for that day. The green shows an
           increase and the red shows a decrease. This chart is most commonly
-          used to display stocks information.
+          used to display stock information.
         </p>
         <h3 className={CandlestickChartStyles.chartH3}>Marks</h3>
         <ul>

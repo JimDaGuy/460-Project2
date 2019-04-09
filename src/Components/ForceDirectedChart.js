@@ -7,14 +7,14 @@ class ForceDirectedChart extends Component {
   componentDidMount() {
     const dataset = {
       nodes: [
-        { name: "IGME430" }, // 0
-        { name: "IGME330" }, // 1
-        { name: "IGME230" }, // 2
-        { name: "IGME202" }, // 3
-        { name: "IGME110" }, // 4
-        { name: "IGME102" }, // 5
-        { name: "IGME116" }, // 6
-        { name: "IGME206" } // 7
+        { name: "IGME430" },
+        { name: "IGME330" },
+        { name: "IGME230" },
+        { name: "IGME202" },
+        { name: "IGME110" },
+        { name: "IGME102" },
+        { name: "IGME116" },
+        { name: "IGME206" }
       ],
       edges: [
         { source: 5, target: 2 },
@@ -86,12 +86,13 @@ class ForceDirectedChart extends Component {
             if (!d3.event.active) {
               force.alphaTarget(0.3).restart();
             }
-            // use fx and fy as fixed x and y values; when set, overrides computed x/y
+
+            // Int x and y forces
             d.fx = d.x;
             d.fy = d.y;
           })
           .on("drag", d => {
-            // set fx and fy to event x/y
+            // set x and y forces when dragging
             d.fx = d3.event.x;
             d.fy = d3.event.y;
           })
@@ -99,30 +100,25 @@ class ForceDirectedChart extends Component {
             if (!d3.event.active) {
               force.alphaTarget(1).restart();
             }
-            // clear fx and fy so that computed x/y is used once again
+
+            // clear x and y forces
             d.fx = null;
             d.fy = null;
           })
       );
 
-    // append title elements for all nodes, giving us tooltips
     nodes.append("title").text(d => d.name);
 
-    // Next we deal with dynamic properties using the forceSimulation.
-    // We do this by setting what happens when the forceSimulation 'ticks'
-    // when running.
-
+    // Update nodes and edges with each tick
     force.on("tick", () => {
-      // update edge line's starting and ending x/y using the
-      // joined data that D3 derived from our dataset
+      // Update edges
       edges
         .attr("x1", d => d.source.x)
         .attr("y1", d => d.source.y)
         .attr("x2", d => d.target.x)
         .attr("y2", d => d.target.y);
 
-      // update node center x/y's using the
-      // joined data that D3 derived from our dataset
+      //Update ndoes
       nodes.attr("cx", d => d.x).attr("cy", d => d.y);
     });
   }

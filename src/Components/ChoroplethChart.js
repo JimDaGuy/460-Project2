@@ -4,8 +4,6 @@ import ChoroplethChartStyles from "./ChoroplethChart.module.scss";
 import * as d3 from "d3";
 import data from "../data/ChoroplethChart.csv";
 
-// Source: http://bl.ocks.org/michellechandra/0b2ce4923dc9b5809922
-
 class ChoroplethChart extends Component {
   componentDidMount() {
     d3.csv(data, d => {
@@ -49,6 +47,7 @@ class ChoroplethChart extends Component {
 
     let maxValue = d3.max(stateData, d => d.value);
 
+    // Divergent color scale
     let cScale = d3
       .scaleLinear()
       .domain([
@@ -68,6 +67,7 @@ class ChoroplethChart extends Component {
         "#c51b7d"
       ]);
 
+    // Draw states
     svg
       .selectAll("path")
       .data(geojson.features)

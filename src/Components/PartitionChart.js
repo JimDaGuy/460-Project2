@@ -57,6 +57,7 @@ class PartitionChart extends Component {
 
     const cScale = d3.scaleOrdinal(d3.schemePastel1);
 
+    // Draw nodes
     svg
       .selectAll("rect")
       .data(root.descendants())
@@ -68,6 +69,7 @@ class PartitionChart extends Component {
       .attr("width", d => d.x1 - d.x0)
       .attr("height", d => d.y1 - d.y0);
 
+    // Draw node labels
     svg
       .selectAll("text")
       .data(root.descendants())

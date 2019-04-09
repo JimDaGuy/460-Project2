@@ -141,7 +141,7 @@ class LineChart extends Component {
 
     // Create Legend
     svg
-      .selectAll(".bop")
+      .selectAll(".boxes")
       .data(companiesArray)
       .enter()
       .append("rect")
@@ -169,7 +169,7 @@ class LineChart extends Component {
       });
 
     svg
-      .selectAll(".dop")
+      .selectAll(".legendText")
       .data(companiesArray)
       .enter()
       .append("text")

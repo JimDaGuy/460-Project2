@@ -128,15 +128,16 @@ class PackedCirclesChart extends Component {
 
     let root = d3.hierarchy(packedData).sum(d => d.value || 0);
 
-    let partition = d3
+    let pack = d3
       .pack()
       .size([svgWidth - chartIndent * 2, svgHeight - chartIndent * 2])
       .padding(1);
 
-    partition(root);
+    pack(root);
 
     let cScale = d3.scaleOrdinal(d3.schemePaired);
 
+    // Draw circles
     svg
       .selectAll("circle")
       .data(root.descendants())
@@ -148,6 +149,7 @@ class PackedCirclesChart extends Component {
       .attr("r", d => d.r)
       .attr("transform", `translate(${chartIndent}, ${chartIndent})`);
 
+    // Circle labels
     svg
       .selectAll("text")
       .data(root.descendants())

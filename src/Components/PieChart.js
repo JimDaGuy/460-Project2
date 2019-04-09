@@ -82,7 +82,7 @@ class PieChart extends Component {
 
     // Boxes
     svg
-      .selectAll(".bop")
+      .selectAll(".boxes")
       .data(dataset)
       .enter()
       .append("rect")
@@ -109,7 +109,7 @@ class PieChart extends Component {
 
     // Text
     svg
-      .selectAll(".dop")
+      .selectAll(".legendText")
       .data(dataset)
       .enter()
       .append("text")

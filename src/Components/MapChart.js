@@ -47,6 +47,7 @@ class MapChart extends Component {
 
     let path = d3.geoPath().projection(projection);
 
+    // Draw counties
     svg
       .selectAll("path")
       .data(geojson.features)
@@ -56,6 +57,7 @@ class MapChart extends Component {
       .attr("fill", "lightgray")
       .attr("stroke", "white");
 
+    // Plot city points
     svg
       .selectAll("circle")
       .data(points)
@@ -66,6 +68,7 @@ class MapChart extends Component {
       .attr("r", "5px")
       .attr("fill", "red");
 
+    // Plot city point text
     svg
       .selectAll("text")
       .data(points)

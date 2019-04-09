@@ -46,17 +46,19 @@ class ChordChart extends Component {
       .attr("width", `${svgWidth}px`)
       .attr("height", `${svgHeight}px`);
 
-    // Plotting data
+    // Chord
     const chord = d3
       .chord()
       .padAngle((padDegrees / 360) * 2 * Math.PI)
       .sortChords(d3.descending);
 
+    // Arcs
     const arc = d3
       .arc()
       .innerRadius(svgWidth / 2 - chartIndent - chordRingWidth)
       .outerRadius(svgWidth / 2 - chartIndent);
 
+    // Ribbon function
     const ribbon = d3
       .ribbon()
       .radius(svgWidth / 2 - chartIndent - chordRingWidth);
@@ -107,7 +109,7 @@ class ChordChart extends Component {
 
     // Boxes
     svg
-      .selectAll(".bop")
+      .selectAll(".boxes")
       .data(categories)
       .enter()
       .append("rect")
@@ -134,7 +136,7 @@ class ChordChart extends Component {
 
     // Text
     svg
-      .selectAll(".dop")
+      .selectAll(".legendText")
       .data(categories)
       .enter()
       .append("text")
