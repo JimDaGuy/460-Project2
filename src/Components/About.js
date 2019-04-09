@@ -75,6 +75,18 @@ class About extends Component {
               Referenced code for choropleth chart:{" "}
               <a href="https://github.com/JimDaGuy/460-Project1">Source</a>
             </li>
+            <li>
+              Geojson for New York used in Map Chart:{" "}
+              <a href="https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/new-york-counties.geojson">
+                Source
+              </a>
+            </li>
+            <li>
+              Geojson for states used in choropleth Chart:{" "}
+              <a href="http://enjalot.github.io/wwsd/data/world/world-110m.geojson">
+                Source
+              </a>
+            </li>
           </ul>
         </p>
       </div>
