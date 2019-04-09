@@ -23,15 +23,15 @@ class About extends Component {
         <p className={AboutStyles.p}>
           <ul className={AboutStyles.ul}>
             <li>
-              Referenced for some visualiztion descriptions and generel info:{" "}
+              Referenced for some visualization descriptions and generel info:{" "}
               <a href="https://datavizproject.com/">Data Vis Project</a>
             </li>
             <li>
-              Referenced for some visualiztion descriptions and generel info:{" "}
+              Referenced for some visualization descriptions and generel info:{" "}
               <a href="https://datavizcatalogue.com/">Data Vis Catalogue</a>
             </li>
             <li>
-              Referenced for some visualiztion descriptions and generel info:{" "}
+              Referenced for some visualization descriptions and generel info:{" "}
               <a href="https://www.r-graph-gallery.com/">R Graph gallery</a>
             </li>
             <li>
@@ -76,7 +76,7 @@ class About extends Component {
               <a href="https://github.com/JimDaGuy/460-Project1">Source</a>
             </li>
             <li>
-              Geojson for New York used in Map Chart:{" "}
+              Geojson for New York used in map Chart:{" "}
               <a href="https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/new-york-counties.geojson">
                 Source
               </a>
